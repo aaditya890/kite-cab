@@ -1,1 +1,73 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$KiteCab-primary: mat.define-palette(mat.$orange-palette,200);
+$KiteCab-accent: mat.define-palette(mat.$gray-palette,700);
+
+
+// The warn palette is optional (defaults to red).
+$KiteCab-warn: mat.define-palette(mat.$red-palette,100);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$KiteCab-theme: mat.define-light-theme((
+  color: (
+    primary: $KiteCab-primary,
+    accent: $KiteCab-accent,
+    warn: $KiteCab-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($KiteCab-theme);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family:sans-serif;
+  // color: map-get($map: $KiteCab-accent, $key:100 );
+  // background-color: map-get($map: $KiteCab-territory, $key: 400);
+ }
+
+:root{
+  /* Change the border focused color */
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
+.mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
+.mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
+.mdc-notched-outline__trailing {
+border-color: map-get($map: $KiteCab-accent, $key:800 );
+}
+.mat-tooltip {
+  font-size: 10rem; /* Adjust the font size as needed */
+  padding: 4rem; /* Adjust padding for better readability */
+}
+
+.mat-tooltip.tooltip {
+  background-color: darkblue;
+  font-size: 12px;
+}
+}
+
+
+

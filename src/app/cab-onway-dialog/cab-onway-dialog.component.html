@@ -1,0 +1,44 @@
+<h2 mat-dialog-title class="text-lg font-semibold mb-4">Cab Price and Distance for the view</h2>
+<div mat-dialog-content>
+    <div class="grid grid-cols-1 space-y-2">
+        <!-- Sedan Card -->
+        <div class="p-2 rounded-lg shadow-md flex items-center">
+            <img src="https://img.freepik.com/free-vector/gray-sedan-car-isolated-white-vector_53876-67104.jpg"
+                alt="Sedan" class="w-28 h-20 md:w-32 md:h-24 mr-3">
+            <div>
+                <h3 class="font-medium text-lg">Sedan</h3>
+                <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{ data.price }}</p>
+                <p class="text-gray-700 text-xs md:text-sm"><strong>Distance:</strong> {{ data.distance }}km</p>
+                <button mat-raised-button color="primary" class="mt-2" (click)="bookCab('Sedan')">Book</button>
+            </div>
+        </div>
+
+        <!-- Hatchback Card -->
+        <div class="p-2 rounded-lg shadow-md flex items-center overflow-hidden">
+            <img src="https://img.freepik.com/free-photo/black-luxury-jeep-driving-road_114579-4058.jpg" alt="Hatchback"
+                class="w-28 h-20 md:w-32 md:h-24 mr-3">
+            <div>
+                <h3 class="font-medium text-lg">Hatchback</h3>
+                <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{ data.price }}</p>
+                <p class="text-gray-700 text-xs md:text-sm"><strong>Distance:</strong> {{ data.distance }}km</p>
+                <button mat-raised-button color="primary" class="mt-2" (click)="bookCab('Hatchback')">Book</button>
+            </div>
+        </div>
+
+        <!-- SUV Card -->
+        <div class="p-2 rounded-lg shadow-md flex items-center overflow-hidden">
+            <img src="https://img.freepik.com/free-photo/white-offroader-jeep-parking_114579-4007.jpg?t=st=1729878830~exp=1729882430~hmac=ab4a66a06e237488f3682df8f4d3645110558e80e6efbfa5b258c4c792695430&w=996"
+                alt="SUV" class="w-28 h-20 md:w-32 md:h-24 mr-3">
+            <div>
+                <h3 class="font-medium text-lg">SUV</h3>
+                <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{ data.price }}</p>
+                <p class="text-gray-700 text-sm md:text-sm"><strong>Distance:</strong> {{ data.distance }}km</p>
+                <button mat-raised-button color="primary" class="mt-2" (click)="bookCab('SUV')">Book</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+</div>
