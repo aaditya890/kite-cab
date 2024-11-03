@@ -1,0 +1,144 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+
+        <h1 class="text-2xl font-bold text-center mb-6">@if (isAdmin) { Admin Login } @else if(!showRegistrationForm) { Driver Login }</h1>
+
+        <!-- Admin Form -->
+        @if (isAdmin) {
+            <div>
+                <form [formGroup]="adminForm" (ngSubmit)="onLogin('admin')" class="space-y-4">
+                    <mat-form-field appearance="fill" class="w-full">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" required>
+                        @if (adminForm.get('email')?.touched && adminForm.get('email')?.hasError('required')) {
+                            <mat-error>
+                                <small>Email is required.</small>
+                            </mat-error>
+                        }
+                        @if (adminForm.get('email')?.touched && adminForm.get('email')?.hasError('email')) {
+                            <mat-error>
+                                <small>Invalid email format.</small>
+                            </mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="w-full">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" formControlName="password" required>
+                        @if (adminForm.get('password')?.touched && adminForm.get('password')?.hasError('required')) {
+                            <mat-error>
+                                <small>Password is required.</small>
+                            </mat-error>
+                        }
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="adminForm.invalid">Login as Admin</button>
+                </form>
+            </div>
+        }
+
+        <!-- Driver Form -->
+        @if (!isAdmin) {
+                @if (!showRegistrationForm) {
+                    <form [formGroup]="driverForm" (ngSubmit)="onLogin('driver')" class="space-y-4">
+                        <mat-form-field appearance="fill" class="w-full">
+                            <mat-label>Driver ID</mat-label>
+                            <input matInput type="text" formControlName="driverId" required>
+                            @if (driverForm.get('driverId')?.touched && driverForm.get('driverId')?.hasError('required')) {
+                                <mat-error>
+                                    <small>Driver ID is required.</small>
+                                </mat-error>
+                            }
+                        </mat-form-field>
+    
+                        <mat-form-field appearance="fill" class="w-full">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" formControlName="password" required>
+                            @if (driverForm.get('password')?.touched && driverForm.get('password')?.hasError('required')) {
+                                <mat-error>
+                                    <small>Password is required.</small>
+                                </mat-error>
+                            }
+                        </mat-form-field>
+    
+                        <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="driverForm.invalid">Login as Driver</button>
+    
+                        <!-- New Driver Registration Button -->
+                        <button mat-button color="accent" class="w-full mt-2" (click)="onRegisterDriver()">
+                            Register as New Driver
+                        </button>
+                    </form>
+                }
+
+                <!-- Registration Form -->
+                @if (showRegistrationForm) {
+                    <div class="mt-6">
+                        <h2 class="text-xl font-bold text-center mb-4">Driver Registration</h2>
+                        <form [formGroup]="driverRegistrationForm" (ngSubmit)="onSubmitRegistration()" class="space-y-4">
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-label>Name</mat-label>
+                                <input matInput formControlName="name" required>
+                                @if (driverRegistrationForm.get('name')?.touched && driverRegistrationForm.get('name')?.hasError('required')) {
+                                    <mat-error>
+                                        <small>Name is required.</small>
+                                    </mat-error>
+                                }
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-label>Mobile Number</mat-label>
+                                <input matInput formControlName="mobileNumber" required>
+                                @if (driverRegistrationForm.get('mobileNumber')?.touched && driverRegistrationForm.get('mobileNumber')?.hasError('required')) {
+                                    <mat-error>
+                                        <small>Mobile number is required.</small>
+                                    </mat-error>
+                                }
+                                @if (driverRegistrationForm.get('mobileNumber')?.touched && (driverRegistrationForm.get('mobileNumber')?.hasError('minlength') || driverRegistrationForm.get('mobileNumber')?.hasError('maxlength'))) {
+                                    <mat-error>
+                                        <small>Please enter a valid 10-digit mobile number.</small>
+                                    </mat-error>
+                                }
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-label>Email</mat-label>
+                                <input matInput type="email" formControlName="email" required>
+                                @if (driverRegistrationForm.get('email')?.touched && driverRegistrationForm.get('email')?.hasError('required')) {
+                                    <mat-error>
+                                        <small>Email is required.</small>
+                                    </mat-error>
+                                }
+                                @if (driverRegistrationForm.get('email')?.touched && driverRegistrationForm.get('email')?.hasError('email')) {
+                                    <mat-error>
+                                        <small>Invalid email format.</small>
+                                    </mat-error>
+                                }
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-label>Vehicle Number</mat-label>
+                                <input matInput formControlName="vehicleNumber" required>
+                                @if (driverRegistrationForm.get('vehicleNumber')?.touched && driverRegistrationForm.get('vehicleNumber')?.hasError('required')) {
+                                    <mat-error>
+                                        <small>Vehicle number is required.</small>
+                                    </mat-error>
+                                }
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-label>Password</mat-label>
+                                <input matInput type="password" formControlName="password" required>
+                                @if (driverRegistrationForm.get('password')?.touched && driverRegistrationForm.get('password')?.hasError('required')) {
+                                    <mat-error>
+                                        <small>Password is required.</small>
+                                    </mat-error>
+                                }
+                            </mat-form-field>
+
+                            <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="driverRegistrationForm.invalid">Register as Driver</button>
+                        </form>
+                    </div>
+                }
+        }
+    </div>
+</div>

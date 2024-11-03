@@ -49,6 +49,10 @@ body { margin: 0; font-family:sans-serif;
  }
 
 :root{
+  .mat-mdc-form-field-error
+  {
+     color: red;
+ }
   /* Change the border focused color */
 .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
 .mdc-notched-outline__leading,
