@@ -1,0 +1,113 @@
+{
+  "locationPrices": [
+    {
+      "id": "6fa0",
+      "pickup": "Bilapsur",
+      "dropoff": "Raipur",
+      "price": 1000,
+      "sedanPrice": 1200,
+      "suvPrice": 1300,
+      "distance": 125,
+      "active": true
+    },
+    {
+      "id": "1396",
+      "pickup": "Raipur",
+      "dropoff": "Bilapsur",
+      "price": 1000,
+      "sedanPrice": 1200,
+      "suvPrice": 1300,
+      "distance": 125,
+      "active": true
+    },
+    {
+      "id": "8fe2",
+      "pickup": "Ntpc",
+      "dropoff": "Sipat",
+      "price": 199,
+      "sedanPrice": 299,
+      "suvPrice": 399,
+      "distance": 50,
+      "active": true
+    },
+    {
+      "id": "4cbe",
+      "pickup": "Sipat",
+      "dropoff": "Ntpc",
+      "price": 199,
+      "sedanPrice": 299,
+      "suvPrice": 399,
+      "distance": 50,
+      "active": true
+    }
+  ],
+  "rentalPackages": [
+    {
+      "id": "5c8c",
+      "time": "6hours",
+      "distance": 60,
+      "hatchbackPrice": 1600,
+      "sedanPrice": 1700,
+      "suvPrice": 2100
+    },
+    {
+      "id": "d415",
+      "time": "8hours",
+      "distance": 80,
+      "hatchbackPrice": 1900,
+      "sedanPrice": 2000,
+      "suvPrice": 2400
+    },
+    {
+      "id": "2182",
+      "time": "10hours",
+      "distance": 100,
+      "hatchbackPrice": 2100,
+      "sedanPrice": 2200,
+      "suvPrice": 2800
+    }
+  ],
+  "customersRecord": [
+    {
+      "customerDetail": {
+        "fullName": "Aaditya Mishra",
+        "pickupDate": "2024-11-28T18:30:00.000Z",
+        "pickupTime": "12:00 AM",
+        "pickupAddress": "Bilaspur (Bilaspur-Cgh)",
+        "numberOfPassengers": 2,
+        "email": "mishraaaditya297@gmail.com",
+        "mobileNumber": "0626763477"
+      },
+      "bookingDetail": {
+        "bookingType": "onway",
+        "carType": "Hatchback",
+        "pickupLocation": "Bilapsur",
+        "dropLocation": "Raipur",
+        "price": 1000,
+        "distance": 125
+      },
+      "id": "65dd"
+    },
+    {
+      "customerDetail": {
+        "fullName": "Aaditya",
+        "pickupDate": "2024-11-22T18:30:00.000Z",
+        "pickupTime": "9:00 AM",
+        "pickupAddress": "Bilaspur (Bilaspur-Cgh)",
+        "numberOfPassengers": 2,
+        "email": "mishraaaditya297@gmail.com",
+        "mobileNumber": "0626363477"
+      },
+      "bookingDetail": {
+        "bookingType": "onway",
+        "carType": "Hatchback",
+        "pickupLocation": "Bilapsur",
+        "dropLocation": "Raipur",
+        "price": 999,
+        "distance": 125
+      },
+      "id": "a032"
+    }
+  ],
+  "driversRecord": []
+}

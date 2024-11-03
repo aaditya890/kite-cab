@@ -1,44 +1,162 @@
-<h2 mat-dialog-title class="text-lg font-semibold mb-4">Cab Price and Distance for the view</h2>
-<div mat-dialog-content>
+@if (!isBookNow) {
+<h2 mat-dialog-title class="text-lg font-semibold mb-2 text-center">Cab Price and Distance</h2>
+<hr>
+<div class="flex justify-between px-6 space-x-2 text-gray-700">
+    <p class="font-semibold">{{ this.data.pickupLocation }}</p>
+    <mat-icon class="text-blue-500">arrow_forward</mat-icon>
+    <p class="font-semibold">{{ this.data.dropLocation }}</p>
+</div>
+<hr>
+<div mat-dialog-content class="container">
     <div class="grid grid-cols-1 space-y-2">
-        <!-- Sedan Card -->
-        <div class="p-2 rounded-lg shadow-md flex items-center">
-            <img src="https://img.freepik.com/free-vector/gray-sedan-car-isolated-white-vector_53876-67104.jpg"
-                alt="Sedan" class="w-28 h-20 md:w-32 md:h-24 mr-3">
-            <div>
-                <h3 class="font-medium text-lg">Sedan</h3>
-                <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{ data.price }}</p>
-                <p class="text-gray-700 text-xs md:text-sm"><strong>Distance:</strong> {{ data.distance }}km</p>
-                <button mat-raised-button color="primary" class="mt-2" (click)="bookCab('Sedan')">Book</button>
-            </div>
-        </div>
-
         <!-- Hatchback Card -->
         <div class="p-2 rounded-lg shadow-md flex items-center overflow-hidden">
-            <img src="https://img.freepik.com/free-photo/black-luxury-jeep-driving-road_114579-4058.jpg" alt="Hatchback"
-                class="w-28 h-20 md:w-32 md:h-24 mr-3">
+            <img src="https://img.freepik.com/free-vector/blue-hatchback-car-blue-background-vector_53876-67338.jpg?t=st=1730104993~exp=1730108593~hmac=21b04c51dd2878671cdf0aef7996f796adb56e23e2d000cb9c0db1e84da5a049&w=826"
+                alt="Hatchback" class="w-28 h-20 md:w-32 md:h-24 mr-3">
             <div>
                 <h3 class="font-medium text-lg">Hatchback</h3>
                 <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{ data.price }}</p>
                 <p class="text-gray-700 text-xs md:text-sm"><strong>Distance:</strong> {{ data.distance }}km</p>
-                <button mat-raised-button color="primary" class="mt-2" (click)="bookCab('Hatchback')">Book</button>
+                <button mat-raised-button color="primary" class="mt-2"
+                    (click)="bookCab('Hatchback',data.price,data.distance)">Book</button>
+            </div>
+        </div>
+
+        <!-- Sedan Card -->
+        <div class="p-2 rounded-lg shadow-md flex items-center">
+            <img src="https://img.freepik.com/free-vector/red-sedan-car-isolated-white-vector_53876-64366.jpg?t=st=1730608425~exp=1730612025~hmac=d62cc0d210bd8997cc88e59ba4793010330b41d67f41edf222d4758dcde8f5ed&w=826"
+                alt="Sedan" class="w-28 h-20 md:w-32 md:h-24 mr-3">
+            <div>
+                <h3 class="font-medium text-lg">Sedan</h3>
+                <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{this.FieldsData.sedanPrice}}
+                </p>
+                <p class="text-gray-700 text-xs md:text-sm"><strong>Distance:</strong> {{ data.distance }}km</p>
+                <button mat-raised-button color="primary" class="mt-2"
+                    (click)="bookCab('Sedan',data.sedanPrice,data.distance)">Book</button>
             </div>
         </div>
 
         <!-- SUV Card -->
         <div class="p-2 rounded-lg shadow-md flex items-center overflow-hidden">
-            <img src="https://img.freepik.com/free-photo/white-offroader-jeep-parking_114579-4007.jpg?t=st=1729878830~exp=1729882430~hmac=ab4a66a06e237488f3682df8f4d3645110558e80e6efbfa5b258c4c792695430&w=996"
+            <img src="https://img.freepik.com/free-vector/white-mpv-minivan-automobile-vector_53876-64369.jpg?t=st=1730608418~exp=1730612018~hmac=c4b179fa94d40e37401043c1a10ed491462bd9039a86f078f57b7b8eee7f1dbe&w=826"
                 alt="SUV" class="w-28 h-20 md:w-32 md:h-24 mr-3">
             <div>
                 <h3 class="font-medium text-lg">SUV</h3>
-                <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{ data.price }}</p>
+                <p class="text-gray-700 text-xs md:text-base"><strong>Price:</strong> ₹{{ this.FieldsData.suvPrice }}
+                </p>
                 <p class="text-gray-700 text-sm md:text-sm"><strong>Distance:</strong> {{ data.distance }}km</p>
-                <button mat-raised-button color="primary" class="mt-2" (click)="bookCab('SUV')">Book</button>
+                <button mat-raised-button color="primary" class="mt-2"
+                    (click)="bookCab('SUV',data.suvPrice,data.distance)">Book</button>
             </div>
         </div>
 
     </div>
 </div>
-<div mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
+<div class="flex flex-col px-2 border-t border-gray-300 bg-gray-50 rounded-b-lg">
+    <h3 class="text-sm font-semibold text-gray-700">Important Information</h3>
+    <div class="flex justify-between items-center">
+        <div class="text-gray-600">
+            <p class="text-xs font-medium text-green-700">* Toll Tax Included</p>
+            <p class="text-xs font-medium text-red-600">* Parking Excluded</p>
+        </div>
+        <button mat-raised-button mat-dialog-close>
+            Close
+        </button>
+    </div>
 </div>
+}
+
+@if (isBookNow && !isCustomerRecordAdded) {
+<div>
+    <hr>
+    <h3 class="text-md font-bold text-center py-2">CUSTOMER DETAILS</h3>
+    <hr>
+    <div class="flex justify-between px-6 py-4 space-x-2 text-gray-700">
+        <button matDialogClose><mat-icon>home</mat-icon></button>
+        <p class="font-semibold">{{this.data.pickupLocation}}</p>
+        <mat-icon class="text-blue-500">arrow_forward</mat-icon>
+        <p class="font-semibold">{{this.data.dropLocation}}</p>
+        <button matDialogClose><mat-icon>edit</mat-icon></button>
+    </div>
+</div>
+<hr>
+<form [formGroup]="customerForm" (ngSubmit)="submitCustomerDetails()" class="px-8 py-4 space-y-2">
+    <!-- Full Name -->
+    <mat-form-field class="w-full">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="fullName" />
+        <mat-error>{{ isFieldInvalid('fullName') ? 'Full Name is required' : '' }}</mat-error>
+    </mat-form-field>
+
+    <!-- Pickup Date -->
+    <mat-form-field class="w-full">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="pickupDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>{{ isFieldInvalid('pickupDate') ? 'Pickup Date is required' : '' }}</mat-error>
+    </mat-form-field>
+
+    <!-- Pickup Time -->
+    <mat-form-field class="w-full">
+        <mat-label>Pickup Time</mat-label>
+        <input matInput formControlName="pickupTime" [ngxMatTimepicker]="pic" />
+        <ngx-mat-timepicker #pic></ngx-mat-timepicker>
+        <mat-error>{{ isFieldInvalid('pickupTime') ? 'Pickup Time is required' : '' }}</mat-error>
+    </mat-form-field>
+
+    <!-- Pickup Address -->
+    <mat-form-field class="w-full">
+        <mat-label>Pickup Address</mat-label>
+        <textarea matInput formControlName="pickupAddress"></textarea>
+        <mat-error>{{ isFieldInvalid('pickupAddress') ? 'Pickup Address is required' : '' }}</mat-error>
+    </mat-form-field>
+
+    <!-- Number of Passengers -->
+    <mat-form-field class="w-full">
+        <mat-label>Number of Passengers</mat-label>
+        <input matInput formControlName="numberOfPassengers" type="number" min="1" />
+        <mat-error>{{ isFieldInvalid('numberOfPassengers') ? 'Must be at least 1 passenger' : '' }}</mat-error>
+    </mat-form-field>
+
+    <!-- Mobile Number -->
+    <mat-form-field class="w-full">
+        <mat-label>Mobile Number</mat-label>
+        <input matInput formControlName="mobileNumber" type="tel" />
+        <mat-error>
+            {{ isFieldInvalid('mobileNumber') && customerForm.get('mobileNumber')?.invalid ? 'Enter a valid 10-digit number' : '' }}
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Email ID -->
+    <mat-form-field class="w-full">
+        <mat-label>Email ID</mat-label>
+        <input matInput formControlName="email" type="email" />
+        <mat-error>{{ isFieldInvalid('email') ? 'Enter a valid email address' : '' }}</mat-error>
+    </mat-form-field>
+
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" [disabled]="this.customerForm.invalid" class="w-full">Submit</button>
+</form>
+}
+
+@if (isCustomerRecordAdded) {
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <div
+            class="p-8 max-w-md bg-white rounded-lg text-center transform scale-0 opacity-0 transition-all duration-700 delay-200 ease-out animate-fadeIn">
+    
+            <div class="flex items-center justify-center mb-4 animate-popUp">
+                <span class="material-icons text-green-500 text-7xl">check_circle</span>
+            </div>
+    
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Record Added Successfully!</h2>
+            <p class="text-gray-600 underline">We will call you within 10 minutes.</p>
+    
+            <button mat-dialog-close mat-raised-button color="accent" class="mt-6 w-full">
+                Close
+            </button>
+        </div>
+    </div>
+}

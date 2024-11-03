@@ -1,0 +1,33 @@
+<mat-toolbar color="primary" class="flex justify-between items-center">
+    <!-- Logo Section -->
+    <div class="relative mb-4 right-5 cursor-pointer" routerLink="/home">
+      <img src="../assets/logo.png" height="100" width="280" alt="Logo">
+    </div>
+  
+    <!-- Hamburger Menu for Mobile -->
+    <button class="lg:hidden p-2 focus:outline-none" (click)="toggleMenu()" routerLink="/home">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
+  
+    <!-- Menu Items (hidden on mobile, shown on larger screens) -->
+    <div class="hidden lg:flex space-x-4">
+      <button mat-button class="text-white" (click)="scrollToAbout('about')">About</button>
+      <button mat-button class="text-white" (click)="scrollToPlaces('places')">Places</button>
+      <button mat-button class="text-white" (click)="scrollToContact('contact')">Contact</button>
+      <button mat-button class="text-white" (click)="openLoginDialog('admin')">Admin Login</button>
+    </div>
+  
+    <!-- Mobile Menu (ngIf for toggling) -->
+    @if (isMenuOpen) {
+    <div
+      class="absolute right-0 top-12 px-6 md:px-0 py-2 border-b-gray-400 bg-orange-400 z-10 flex-col flex space-y-2 lg:hidden mt-2">
+      <button mat-button class="text-white" (click)="scrollToAbout('about')">About</button>
+      <button mat-button class="text-white" (click)="scrollToPlaces('places')">Places</button>
+      <button mat-button class="text-white" (click)="scrollToContact('contact')">Contact</button>
+      <button mat-button class="text-white" (click)="openLoginDialog('admin')">Admin Login</button>
+      <button mat-button class="text-white" (click)="openLoginDialog('driver')">Driver Login</button>
+    </div>
+    }
+  </mat-toolbar>

@@ -1,0 +1,346 @@
+<!-- Chips for selecting form type -->
+<div class="flex justify-center items-center">
+  <mat-chip-listbox class="flex justify-center space-x-3">
+    @for (chip of chips; track $index) {
+    <mat-chip-option [selected]="selectedChip == chip" (click)="selectChip(chip)"
+      class="px-4 py-2 cursor-pointer transition-all duration-300 text-gray-700 font-semibold rounded-lg">
+      {{ chip.label }}
+    </mat-chip-option>
+    }
+</mat-chip-listbox>
+</div>
+@if (selectedChip.key!=='customer') {
+  <div class="p-6 bg-gray-100 flex flex-col items-center justify-center">
+  <!-- Form Sections -->
+    @if (selectedChip.key === 'onway') {
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full mt-3 space-y-6">
+      <h2 class="text-xl font-bold mb-4 text-center">Add Location Price (One-Way)</h2>
+      <form [formGroup]="priceForm" (ngSubmit)="addLocationPrice()">
+        <div class="md:flex gap-2">
+          <mat-form-field appearance="fill" class="w-full mb-4">
+            <mat-label>Pickup Location</mat-label>
+            <input matInput formControlName="pickup" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-full mb-4">
+            <mat-label>Dropoff Location</mat-label>
+            <input matInput formControlName="dropoff" required />
+          </mat-form-field>  
+        </div>
+        <div class="md:flex gap-2">
+          <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price" required />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Sedan Price</mat-label>
+          <input matInput type="number" formControlName="sedanPrice" required />
+        </mat-form-field>
+      </div>
+      <div class="md:flex gap-2">
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>SUV Price</mat-label>
+          <input matInput type="number" formControlName="suvPrice" required />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Distance</mat-label>
+          <input matInput type="number" formControlName="distance" required />
+        </mat-form-field>
+      </div>
+        <mat-slide-toggle formControlName="active" class="w-full">Active</mat-slide-toggle>
+        <button mat-raised-button color="primary" type="submit" class="w-full mt-6">
+          {{ editingId ? 'Update Location Price' : 'Add Location Price' }}
+        </button>
+      </form>
+  <hr><hr>
+    </div>
+    }
+    
+    @if (selectedChip.key === 'rental') {
+    <div class="bg-white p-8 rounded-lg shadow-lg mt-3 max-w-lg w-full space-y-6">
+      <h2 class="text-xl font-bold mb-4 text-center">Add Local Rental Package</h2>
+      <form [formGroup]="rentalForm" (ngSubmit)="addRentalPackage()">
+        <div class="md:flex gap-2">
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Time</mat-label>
+          <input matInput formControlName="time" placeholder="Time (hours/day)" required />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Distance (km)</mat-label>
+          <input matInput formControlName="distance" type="number" placeholder="Distance in km" required />
+        </mat-form-field>
+      </div>
+      <div class="md:flex gap-2">
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Hatchback Price</mat-label>
+          <input matInput formControlName="hatchbackPrice" type="number" placeholder="Price for Hatchback" required />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Sedan Price</mat-label>
+          <input matInput formControlName="sedanPrice" type="number" placeholder="Price for Sedan" required />
+        </mat-form-field>
+      </div>
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>SUV Price</mat-label>
+          <input matInput formControlName="suvPrice" type="number" placeholder="Price for SUV" required />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="w-full mt-6">
+          {{ editingRentalId ? 'Update Package' : 'Add Package' }}
+        </button>
+      </form>
+    </div>
+    }
+  </div>
+}
+
+<!-- Table Section -->
+@if (selectedChip.key === 'onway'){
+<div class="my-4 overflow-scroll">
+  <h2 class="text-lg font-semibold text-center">Onway Location Prices</h2>
+  <table mat-table [dataSource]="locationPrices" class="w-full mt-2 border rounded-lg">
+    @for (column of displayedColumns; track $index) {
+    <ng-container [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef class="py-2 px-4 font-semibold text-gray-700"> {{ column }} </th>
+      <td mat-cell *matCellDef="let element" class="py-2 px-4 text-gray-600">
+        {{ element[column] }}
+        @if (column === 'actions') {
+        <ng-container>
+          <div class="flex">
+            <button mat-icon-button (click)="editLocationPrice(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteLocationPrice(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+        }
+      </td>
+    </ng-container>
+    }
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+}
+
+@if (selectedChip.key === 'rental'){
+  <div class="my-4 overflow-scroll">
+    <h2 class="text-lg font-semibold text-center">Local Rental Packages</h2>
+    <table mat-table [dataSource]="localRentalPackages" class="w-full border mt-2 rounded-lg">
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef class="py-2 px-4 font-semibold text-gray-700"> Time </th>
+        <td mat-cell *matCellDef="let package" class="py-2 px-4 text-gray-600"> {{ package.time }} </td>
+      </ng-container>
+      <ng-container matColumnDef="distance">
+        <th mat-header-cell *matHeaderCellDef class="py-2 px-4 font-semibold text-gray-700"> Distance </th>
+        <td mat-cell *matCellDef="let package" class="py-2 px-4 text-gray-600"> {{ package.distance }}km </td>
+      </ng-container>
+      <ng-container matColumnDef="hatchbackPrice">
+        <th mat-header-cell *matHeaderCellDef class="py-2 px-4 font-semibold text-gray-700"> Hatchback </th>
+        <td mat-cell *matCellDef="let package" class="py-2 px-4 text-gray-600"> {{ package.hatchbackPrice }} </td>
+      </ng-container>
+      <ng-container matColumnDef="sedanPrice">
+        <th mat-header-cell *matHeaderCellDef class="py-2 px-4 font-semibold text-gray-700"> Sedan </th>
+        <td mat-cell *matCellDef="let package" class="py-2 px-4 text-gray-600"> {{ package.sedanPrice }} </td>
+      </ng-container>
+      <ng-container matColumnDef="suvPrice">
+        <th mat-header-cell *matHeaderCellDef class="py-2 px-4 font-semibold text-gray-700"> SUV </th>
+        <td mat-cell *matCellDef="let package" class="py-2 px-4 text-gray-600"> {{ package.suvPrice }} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="py-2 px-2 font-semibold text-gray-700"> Actions </th>
+        <td mat-cell *matCellDef="let package" class="py-2 px-2 text-gray-600">
+          <div class="flex">
+            <button mat-icon-button (click)="editRentalPackage(package)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteRentalPackage(package.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['time', 'distance', 'hatchbackPrice', 'sedanPrice', 'suvPrice', 'actions']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['time', 'distance', 'hatchbackPrice', 'sedanPrice', 'suvPrice', 'actions'];">
+      </tr>
+    </table>
+  </div>
+}
+
+@if (selectedChip.key === 'customer') {
+  <div class="my-4 overflow-scroll">
+    <h2 class="text-lg font-semibold text-center">Customer Records And Actions</h2>
+    <table mat-table [dataSource]="customerRecords" class="w-full">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let record"> {{ record.id }} </td>
+      </ng-container>
+
+      <!-- Customer Details -->
+      <ng-container matColumnDef="customerDetail">
+        <th mat-header-cell *matHeaderCellDef> Customer Details </th>
+        <td mat-cell *matCellDef="let record">
+          {{ record.customerDetail?.fullName }} <br>
+          Pickup Date: {{ record.customerDetail?.pickupDate }} <br>
+          Pickup Time: {{ record.customerDetail?.pickupTime }} <br>
+          Address: {{ record.customerDetail?.pickupAddress }} <br>
+          Passengers: {{ record.customerDetail?.numberOfPassengers }} <br>
+          Email: {{ record.customerDetail?.email }} <br>
+          Mobile: {{ record.customerDetail?.mobileNumber }}
+        </td>
+      </ng-container>
+
+      <!-- Booking Details -->
+      <ng-container matColumnDef="bookingDetail">
+        <th mat-header-cell *matHeaderCellDef> Booking Details </th>
+        <td mat-cell *matCellDef="let record">
+          Type: {{ record.bookingDetail?.bookingType }} <br>
+          Car Type: {{ record.bookingDetail?.carType }} <br>
+          Pickup Location: {{ record.bookingDetail?.pickupLocation }} <br>
+          Price: {{ record.bookingDetail?.price }}
+
+          <!-- Conditional fields based on booking type -->
+          <ng-container *ngIf="record.bookingDetail?.bookingType === 'onway'">
+            <br> Drop Location: {{ record.bookingDetail?.dropLocation }}
+            <br> Distance: {{ record.bookingDetail?.distance }} km
+          </ng-container>
+          <ng-container *ngIf="record.bookingDetail?.bookingType === 'round-trip'">
+            <br> Drop Location: {{ record.bookingDetail?.dropLocation }}
+            <br> Distance: {{ record.bookingDetail?.distance }} km
+            <br> Waiting Time: {{ record.bookingDetail?.waitingTime }}
+            <br> Approx Distance: {{ record.bookingDetail?.approxDistance }} km
+          </ng-container>
+          <ng-container *ngIf="record.bookingDetail?.bookingType === 'local-rental'">
+            <br> Package: {{ record.bookingDetail?.package }}
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <!-- Action Buttons -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let record">
+          <button mat-button (click)="editCustomer(record)">Edit</button>
+          <button mat-button color="warn" (click)="deleteCustomer(record.id)">Delete</button>
+          <button mat-button (click)="downloadRecord(record.id)">Download</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedBookingDetailColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedBookingDetailColumns;"></tr>
+    </table>
+  </div>
+}
+<!--  -->
+
+
+
+@if (showCustomerRecordEditForm) {
+  <mat-dialog-content class="p-8 bg-white rounded-lg shadow-lg">
+    <form [formGroup]="customerRecordEditForm" class="space-y-8">
+      <h3 class="text-2xl font-bold text-gray-800 mb-6">Edit Customer Details</h3>
+  
+      <!-- Customer Details Section -->
+      <div formGroupName="customerDetail" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <mat-form-field class="w-full">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="fullName" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Pickup Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="pickupDate">
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Pickup Time</mat-label>
+          <input matInput formControlName="pickupTime" type="time" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Pickup Address</mat-label>
+          <input matInput formControlName="pickupAddress" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Number of Passengers</mat-label>
+          <input matInput formControlName="numberOfPassengers" type="number" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Mobile Number</mat-label>
+          <input matInput formControlName="mobileNumber" required>
+        </mat-form-field>
+      </div>
+  
+      <h3 class="text-xl font-semibold text-gray-700 mt-6">Booking Details</h3>
+  
+      <!-- Booking Details Section -->
+      <div formGroupName="bookingDetail" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <mat-form-field class="w-full">
+          <mat-label>Booking Type</mat-label>
+          <input matInput formControlName="bookingType" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Car Type</mat-label>
+          <input matInput formControlName="carType" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Pickup Location</mat-label>
+          <input matInput formControlName="pickupLocation" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Drop Location</mat-label>
+          <input matInput formControlName="dropLocation">
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price" type="number" required>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Distance</mat-label>
+          <input matInput formControlName="distance" type="number">
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Waiting Time</mat-label>
+          <input matInput formControlName="waitingTime">
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Approx Distance</mat-label>
+          <input matInput formControlName="approxDistance">
+        </mat-form-field>
+  
+        <mat-form-field class="w-full">
+          <mat-label>Package</mat-label>
+          <input matInput formControlName="package">
+        </mat-form-field>
+      </div>
+  
+      <button mat-raised-button color="primary" (click)="saveEdit()">Save Changes</button>
+  
+    </form>
+  </mat-dialog-content>
+  
+}
+
+
+
