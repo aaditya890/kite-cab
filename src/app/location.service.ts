@@ -6,7 +6,7 @@ import { Observable, of, map } from 'rxjs';
   providedIn: 'root'
 })
 export class LocationService {
-  private apiUrl = 'http://localhost:3000'; // Replace with your actual API URL
+  private apiUrl = 'https://json-dev.onrender.com'; // Replace with your actual API URL
   constructor(private http: HttpClient,) { }
 
   // Location Prices
