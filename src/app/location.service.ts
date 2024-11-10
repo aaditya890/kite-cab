@@ -1,17 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
+import { SupabaseService } from './supabase.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
   private apiUrl = 'https://json-dev.onrender.com'; // Replace with your actual API URL
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient,
+    private supabase: SupabaseService
+    ) { }
 
   // Location Prices
   getLocationPrices(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/locationPrices`);
+    return new Observable((observer) => {
+      this.supabase.getDataByKey('locationPrices').then(res => {
+        observer.next(res);
+        // observer.complete();
+      });  
+    });
+    // return this.http.get<any[]>(`${this.apiUrl}/locationPrices`);
   }
 
   addLocationPrice(locationPrice: any): Observable<any> {

@@ -1,8 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, afterNextRender } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from "./footer/footer.component";
+import { SupabaseService } from './supabase.service';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,13 @@ import { FooterComponent } from "./footer/footer.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(
+    private supabase: SupabaseService
+  ) {
+    afterNextRender(() => {
+      this.supabase.initialize();
+    })
+  }
+}
 
