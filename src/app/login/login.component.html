@@ -8,26 +8,11 @@
             <div>
                 <form [formGroup]="adminForm" (ngSubmit)="onLogin('admin')" class="space-y-4">
                     <mat-form-field appearance="fill" class="w-full">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="email" formControlName="email" required>
-                        @if (adminForm.get('email')?.touched && adminForm.get('email')?.hasError('required')) {
+                        <mat-label>AdminID</mat-label>
+                        <input matInput type="text" formControlName="adminId" required>
+                        @if (adminForm.get('adminId')?.touched && adminForm.get('adminId')?.hasError('required')) {
                             <mat-error>
-                                <small>Email is required.</small>
-                            </mat-error>
-                        }
-                        @if (adminForm.get('email')?.touched && adminForm.get('email')?.hasError('email')) {
-                            <mat-error>
-                                <small>Invalid email format.</small>
-                            </mat-error>
-                        }
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="w-full">
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" formControlName="password" required>
-                        @if (adminForm.get('password')?.touched && adminForm.get('password')?.hasError('required')) {
-                            <mat-error>
-                                <small>Password is required.</small>
+                                <small>Admin Id Invalid</small>
                             </mat-error>
                         }
                     </mat-form-field>

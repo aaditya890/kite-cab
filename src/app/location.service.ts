@@ -77,8 +77,20 @@ export class LocationService {
     return this.http.put<any>(`${this.apiUrl}/customersRecord/${id}`, updatedData);
   }
 
-  deleteCustomerRecord(id: string): Observable<any> {
+  deleteCustomerRecord(id: any): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/customersRecord/${id}`);
+  }
+
+  setEnquiryRecord(enquiryData:any):Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/enquiry`, enquiryData);
+  }
+
+  getEnquiryRecord():Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/enquiry`);
+  }
+
+  deleteEnquiryRecord(id:string):Observable<any>{
+    return this.http.delete<any>(`${this.apiUrl}/enquiry/${id}`);
   }
 }
 

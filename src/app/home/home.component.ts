@@ -23,7 +23,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, AsyncPipe, MatSnackBarModule, CommonModule, RouterLink, MatTooltipModule, MatAutocomplete, MatAutocompleteModule, MatTooltip, MatIconModule, MatChipsModule, MatChip, NgClass, MatButtonModule, MatSelectModule, MatFormFieldModule, MatInput, MatInputModule, ReactiveFormsModule, FormsModule],
+  imports: [MatSnackBarModule, CommonModule, MatTooltipModule, MatAutocomplete, MatAutocompleteModule, MatIconModule, MatChipsModule, MatButtonModule, MatSelectModule, MatFormFieldModule, MatInput, MatInputModule, ReactiveFormsModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -54,7 +54,6 @@ export class HomeComponent {
     private router: Router,
     private locationService: LocationService,
     private snackBar: MatSnackBar,
-  
   ) { }
 
   ngOnInit(): void {
@@ -105,7 +104,6 @@ export class HomeComponent {
     this.locationService.getRentalPackages().subscribe((res: any[]) => {
       this.rentalFieldData = res;
     })
-
   }
 
   private getDataFromService(): void {
@@ -113,10 +111,11 @@ export class HomeComponent {
       next: (data) => {
         const pickupSet = new Set<string>();
         const dropSet = new Set<string>();
-
+  
+        // Process the API data
         for (const item of data) {
           const { pickup, dropoff, price, sedanPrice, suvPrice, distance, active } = item;
-
+  
           if (!this.locations[pickup]) {
             this.locations[pickup] = {};
           }
@@ -127,10 +126,11 @@ export class HomeComponent {
             distance,
             active: active !== false,
           };
+  
           pickupSet.add(pickup);
           dropSet.add(dropoff);
         }
-
+  
         this.pickupFields = Array.from(pickupSet);
         this.dropFields = Array.from(dropSet);
       },
@@ -144,7 +144,7 @@ export class HomeComponent {
 
   public bookingByWhatsapp(): void {
     const phoneNumber = "+916263676216";
-    const message = `Hi! I’d like to proceed with a cab booking. Please confirm the car availability and provide the fare details.`;
+    const message = `Hi! I would like to proceed with a cab booking. Please confirm the car availability and provide the fare details.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
@@ -161,13 +161,16 @@ export class HomeComponent {
     if (formType === 'oneWay' && this.oneWayForm.valid) {
       pickupLocation = this.oneWayForm.value.pickupLocation;
       dropLocation = this.oneWayForm.value.dropLocation;
+       this.registerForEnquiry(pickupLocation,dropLocation,this.oneWayForm.value.mobileNumber)
       this.onWayCheckFare(pickupLocation, dropLocation);
     } else if (formType === 'roundTrip' && this.roundTripForm.valid) {
       pickupLocation = this.roundTripForm.value.pickupLocation;
       dropLocation = this.roundTripForm.value.dropLocation;
+      this.registerForEnquiry(pickupLocation,dropLocation,this.roundTripForm.value.mobileNumber)
       this.roundTripFare(pickupLocation, dropLocation);
     } else if (formType === 'localRental' && this.localRentalForm.valid) {
       this.localRentalFare();
+      this.registerForEnquiry(this.localRentalForm.value.pickup,this.localRentalForm.value.package,this.localRentalForm.value.mobileNumber)
     } else {
       return;
     }
@@ -197,6 +200,9 @@ export class HomeComponent {
       this.ifCheckPrice = true;
       this.cabPrice = null;
       this.cabDistance = null;
+      this.snackBar.open("No cabs are available for the selected locations.", "Close", {
+        duration: 3000, // optional: set duration for the snackbar
+      });
     }
   }
 
@@ -226,6 +232,9 @@ export class HomeComponent {
       this.ifCheckPrice = true;
       this.cabPrice = null;
       this.cabDistance = null;
+      this.snackBar.open("No cabs are available for the selected locations.", "Close", {
+        duration: 3000, // optional: set duration for the snackbar
+      });
     }
   }
 
@@ -265,8 +274,14 @@ export class HomeComponent {
     }
   }
 
-  get navigateToAdmin() {
-    return this.router.navigate(['/admin']);
+  public registerForEnquiry(pickupLocation: string, dropLocation: string, mobileNumber: string) {
+    const enquiryData:any = {
+      pickupLocation: pickupLocation,
+      dropLocationOrPackages: dropLocation,
+      mobileNumber: mobileNumber
+    }; 
+    this.locationService.setEnquiryRecord(enquiryData).subscribe((res:any)=>{
+    })
   }
-
+  
 }

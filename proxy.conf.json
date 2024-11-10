@@ -1,0 +1,9 @@
+{
+    "/api": {
+      "target": "https://json-dev.onrender.com",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": { "^/api": "" }
+    }
+  }
+  

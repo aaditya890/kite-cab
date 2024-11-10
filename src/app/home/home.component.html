@@ -1,5 +1,6 @@
 <!-- Hero Section -->
 <section class="bg-gradient-to-tr from-orange-200 to-orange-400 py-10">
+  <img src="../../assets/wp.png" (click)="bookingByWhatsapp()" class="cursor-pointer bottom-0 right-0 z-50 h-20 w-28 fixed" alt="whatsapp-icon">
   <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-6">
     <!-- Left Side Content -->
     <div class="text-left space-y-4 md:w-1/2">
@@ -10,15 +11,15 @@
       </p>
       <p class="text-gray-700 text-lg md:hidden flex flex-col">
         <span>Choose the option that fits your needs,</span>
-        <span>Available in all over Chhattisgarh.</span>
+        <span>Available in all over Chhattisgarh & Nagpur.</span>
       </p>
       <div class="flex gap-2 md:flex-row flex-col">
         <button mat-raised-button (click)="bookingByCall()" color="warn">
           <mat-icon>call</mat-icon>BOOK BY CALL
         </button>
         <button mat-raised-button color="warn" (click)="bookingByWhatsapp()">
-           <mat-icon>chat</mat-icon>
-           BOOK BY
+          <mat-icon>chat</mat-icon>
+          BOOK BY
           WHATSAPP</button>
       </div>
       <p class="text-gray-700 text-lg md:flex hidden flex-col">
@@ -46,7 +47,7 @@
           <input matInput formControlName="pickupLocation" [matAutocomplete]="onwayPickup"
             placeholder="Pickup Location">
           <mat-autocomplete #onwayPickup="matAutocomplete">
-            @for (field of filteredOnwayPickupFields; track $index) {
+            @for (field of pickupFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -54,7 +55,7 @@
         <mat-form-field appearance="outline" class="w-full" style="max-width: 300px;">
           <input matInput formControlName="dropLocation" [matAutocomplete]="onwayDrop" placeholder="Drop Location">
           <mat-autocomplete #onwayDrop="matAutocomplete">
-            @for (field of filteredOnwayDropFields; track $index) {
+            @for (field of dropFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -86,7 +87,7 @@
           <input matInput formControlName="pickupLocation" [matAutocomplete]="onwayPickup"
             placeholder="Pickup Location">
           <mat-autocomplete #onwayPickup="matAutocomplete">
-            @for (field of filteredRoundTripPickupFields; track $index) {
+            @for (field of pickupFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -94,7 +95,7 @@
         <mat-form-field appearance="outline" class="w-full" style="max-width: 300px;">
           <input matInput formControlName="dropLocation" [matAutocomplete]="drop" placeholder="Drop Location">
           <mat-autocomplete #drop="matAutocomplete">
-            @for (field of filteredRoundTripDropFields; track $index) {
+            @for (field of dropFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -142,7 +143,7 @@
           <input matInput formControlName="pickupLocation" [matAutocomplete]="localRentalPickup"
             placeholder="Pickup Location" class="py-1 px-2 text-sm">
           <mat-autocomplete #localRentalPickup="matAutocomplete">
-            @for (field of filteredLocalRentalPickupFields; track $index) {
+            @for (field of pickupFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -202,7 +203,7 @@
             Explore KiteCab for a Relaxing Ride
           </span>
         </h2>
-      
+
         <!-- Subtitle with Emphasis and Soft Shadow -->
         <p class="text-gray-700 text-lg lg:text-xl mx-auto lg:mx-0 tracking-wide leading-relaxed mb-3">
           At <span class="font-semibold text-teal-600">KiteCab</span>, we prioritize your comfort and convenience.
@@ -210,10 +211,12 @@
         </p>
 
         <!-- Service Highlights Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">      
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <!-- Card 1 -->
           <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
-            <img src="https://img.freepik.com/free-vector/24-hrs-7-days-service-availability-background-with-clock-sign_1017-54484.jpg?t=st=1730477217~exp=1730480817~hmac=b3027e13a038d8f73cf35dc924fdca64dd5d883d0dd46827500d69cd82fb7c52&w=740" alt="24x7 Icon" class="w-10 h-10 mr-3">
+            <img
+              src="https://img.freepik.com/free-vector/24-hrs-7-days-service-availability-background-with-clock-sign_1017-54484.jpg?t=st=1730477217~exp=1730480817~hmac=b3027e13a038d8f73cf35dc924fdca64dd5d883d0dd46827500d69cd82fb7c52&w=740"
+              alt="24x7 Icon" class="w-10 h-10 mr-3">
             <div>
               <h3 class="text-lg font-semibold text-gray-800">24×7 Available Services</h3>
               <p class="text-gray-600 text-sm">Round-the-clock support for all your travel needs.</p>
@@ -222,7 +225,9 @@
 
           <!-- Card 2 -->
           <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
-            <img src="https://img.freepik.com/free-vector/hotel-booking-concept-illustration_114360-6497.jpg?t=st=1730477269~exp=1730480869~hmac=148e740fb5986ff20d44f7267c6bb63735eb257866672b939d191fba1d5690de&w=740" alt="Online Booking Icon" class="w-10 h-10 mr-3">
+            <img
+              src="https://img.freepik.com/free-vector/hotel-booking-concept-illustration_114360-6497.jpg?t=st=1730477269~exp=1730480869~hmac=148e740fb5986ff20d44f7267c6bb63735eb257866672b939d191fba1d5690de&w=740"
+              alt="Online Booking Icon" class="w-10 h-10 mr-3">
             <div>
               <h3 class="text-lg font-semibold text-gray-800">Online Taxi Booking</h3>
               <p class="text-gray-600 text-sm">Book your ride easily and quickly online.</p>
@@ -231,7 +236,9 @@
 
           <!-- Card 3 -->
           <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
-            <img src="https://img.freepik.com/free-vector/alarm-clock-concept-illustration_114360-12986.jpg?t=st=1730477331~exp=1730480931~hmac=517aa14164a4faa47d8d6fb8f8ecdca824a0e7c95750574b4433036f1d39e0d7&w=740" alt="Client Satisfaction Icon" class="w-10 h-10 mr-3">
+            <img
+              src="https://img.freepik.com/free-vector/alarm-clock-concept-illustration_114360-12986.jpg?t=st=1730477331~exp=1730480931~hmac=517aa14164a4faa47d8d6fb8f8ecdca824a0e7c95750574b4433036f1d39e0d7&w=740"
+              alt="Client Satisfaction Icon" class="w-10 h-10 mr-3">
             <div>
               <h3 class="text-lg font-semibold text-gray-800">On Time Service</h3>
               <p class="text-gray-600 text-sm">We have maintain discipline for timely pickups.</p>
@@ -240,23 +247,67 @@
 
           <!-- Card 4 -->
           <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
-            <img src="https://img.freepik.com/free-vector/taxi-app-interface-illustration_23-2148487606.jpg?t=st=1730477782~exp=1730481382~hmac=e81590e0df65b11bd7fa340a65076231ae7134d5e18b65d7ee2bb99d91656447&w=740" alt="Trained Drivers Icon" class="w-10 h-10 mr-3">
+            <img
+              src="https://img.freepik.com/free-vector/taxi-app-interface-illustration_23-2148487606.jpg?t=st=1730477782~exp=1730481382~hmac=e81590e0df65b11bd7fa340a65076231ae7134d5e18b65d7ee2bb99d91656447&w=740"
+              alt="Trained Drivers Icon" class="w-10 h-10 mr-3">
             <div>
               <h3 class="text-lg font-semibold text-gray-800">Well-Trained Drivers</h3>
               <p class="text-gray-600 text-sm">Verified drivers with highway and hill training.</p>
             </div>
           </div>
         </div>
+
       </div>
 
       <!-- Right Side: Image -->
       <div class="flex justify-center">
-        <img src="https://img.freepik.com/free-vector/taxi-app-concept-illustration_52683-36028.jpg?t=st=1730477993~exp=1730481593~hmac=10265cb4d241b868031db11baffdb7e49a6588eade4f3650c9687f08ab940389&w=996" alt="KiteCab relaxing ride" class="w-full h-full rounded-lg shadow-lg object-cover">
-      </div>     
+        <img
+          src="https://img.freepik.com/free-vector/taxi-app-concept-illustration_52683-36028.jpg?t=st=1730477993~exp=1730481593~hmac=10265cb4d241b868031db11baffdb7e49a6588eade4f3650c9687f08ab940389&w=996"
+          alt="KiteCab relaxing ride" class="w-full h-full rounded-lg shadow-lg object-cover">
+      </div>
     </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-3">
+  
+      <!-- Card 1 -->
+      <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
+        <img
+          src="https://img.freepik.com/free-vector/gradient-world-tourism-day-illustration_52683-129635.jpg?t=st=1731077222~exp=1731080822~hmac=daee701f729d2090f23a9bf3c95d74906d617f8abeaf2c136bcdf22a0565af75&w=996"
+          alt="Online Booking Icon" class="w-20 h-14 mr-3">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Local and Outstation Travel</h3>
+          <p class="text-gray-600 text-sm">Easily book rides for city or long-distance journeys.</p>
+        </div>
+      </div>
+    
+      <!-- Card 2 -->
+      <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
+        <img
+          src="https://img.freepik.com/free-vector/airport-tower-concept-illustration_114360-9525.jpg?t=st=1731077470~exp=1731081070~hmac=57a3a5ee28f0d14eff79be09e865a8af0085ee528855865120c6f776b0922bd4&w=740"
+          alt="Airport and Railway Icon" class="w-20 h-14 mr-3">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Airport and Railway Station</h3>
+          <p class="text-gray-600 text-sm">Reliable pickups and drop-offs at major transit points.</p>
+        </div>
+      </div>
+    
+      <!-- Card 3 -->
+      <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
+        <img
+          src="https://img.freepik.com/free-vector/gradient-world-tourism-day-illustration_52683-129646.jpg?t=st=1731077607~exp=1731081207~hmac=c7c441b0ae1416989c839a69e6ec635932b3fa193bc9db142663b9c96369fc2d&w=996"
+          alt="Timely Pickup Icon" class="w-20 h-14 mr-3">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">One-Way and Round-Trip</h3>
+          <p class="text-gray-600 text-sm">Timely pickups for both one-way and round trips.</p>
+        </div>
+      </div>
+    
+    </div>
+   
   </div>
 </section>
-<hr><hr>
+<hr>
+<hr>
 
 <!-- Available Locations -->
 <section id="places" class="bg-gray-100 py-10">
@@ -310,7 +361,8 @@
     </div>
   </div>
 </section>
-<hr><hr>
+<hr>
+<hr>
 
 <!-- Explore Destination -->
 <section class="bg-gray-100 py-12">
@@ -318,17 +370,19 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <!-- Left Side: Information Section -->
       <div>
-        <h2 class="text-4xl font-semibold mb-4 text-gray-800">Travel & Explore Beautiful Destinations in Chhattisgarh</h2>
-        
+        <h2 class="text-4xl font-semibold mb-4 text-gray-800">Travel & Explore Beautiful Destinations in Chhattisgarh
+        </h2>
+
         <!-- Highlighted Information Cards -->
         <div class="space-y-6">
           <div class="p-4 bg-white rounded-lg shadow-md flex items-center">
             <div>
               <h3 class="text-xl font-semibold text-gray-800">Explore Historical Landmarks</h3>
-              <p class="text-gray-600 text-sm">Discover ancient temples and cultural sites that bring the past to life.</p>
+              <p class="text-gray-600 text-sm">Discover ancient temples and cultural sites that bring the past to life.
+              </p>
             </div>
           </div>
-          
+
           <div class="p-4 bg-white rounded-lg shadow-md flex items-center">
             <div>
               <h3 class="text-xl font-semibold text-gray-800">Scenic Nature Reserves</h3>
@@ -339,19 +393,23 @@
           <div class="p-4 bg-white rounded-lg shadow-md flex items-center">
             <div>
               <h3 class="text-xl font-semibold text-gray-800">Cultural Experiences</h3>
-              <p class="text-gray-600 text-sm">Immerse yourself in the vibrant arts, crafts, and traditions of the region.</p>
+              <p class="text-gray-600 text-sm">Immerse yourself in the vibrant arts, crafts, and traditions of the
+                region.</p>
             </div>
           </div>
-          
+
           <div class="p-4 bg-white rounded-lg shadow-md flex items-center">
             <div>
               <h3 class="text-xl font-semibold text-gray-800">Relaxing Urban Spots</h3>
-              <p class="text-gray-600 text-sm">Visit bustling marketplaces, local eateries, and beautiful cityscapes.</p>
+              <p class="text-gray-600 text-sm">Visit bustling marketplaces, local eateries, and beautiful cityscapes.
+              </p>
             </div>
           </div>
           <div class="flex items-center justify-between">
-              <img class="max-w-xs hidden md:block" src="https://img.freepik.com/free-vector/travel-stickers-badge-set_53876-118144.jpg?t=st=1730481273~exp=1730484873~hmac=7b176882a3b54ec4235dde7bae8503670c826dbe87bfc27111238937299fcd91&w=996">
-              <img class="max-w-xs hidden md:block" src="https://img.freepik.com/free-vector/travel-stickers-badge-set_53876-100734.jpg?t=st=1730481202~exp=1730484802~hmac=5e957c6c112c15c06bb451bb440536b4cd7ee74fa0ec1571032ebfcc91b76852&w=996">
+            <img class="max-w-xs hidden md:block"
+              src="https://img.freepik.com/free-vector/travel-stickers-badge-set_53876-118144.jpg?t=st=1730481273~exp=1730484873~hmac=7b176882a3b54ec4235dde7bae8503670c826dbe87bfc27111238937299fcd91&w=996">
+            <img class="max-w-xs hidden md:block"
+              src="https://img.freepik.com/free-vector/travel-stickers-badge-set_53876-100734.jpg?t=st=1730481202~exp=1730484802~hmac=5e957c6c112c15c06bb451bb440536b4cd7ee74fa0ec1571032ebfcc91b76852&w=996">
           </div>
         </div>
       </div>
@@ -359,36 +417,37 @@
       <!-- Right Side: Image Section -->
       <div class="grid grid-cols-2 gap-4">
         <div class="grid gap-4">
-          <img src="https://as1.ftcdn.net/v2/jpg/03/58/18/28/1000_F_358182819_02Atx6XYRuylicLrNs6KARyGj7wPimmY.jpg" alt="Destination Image 1" class="w-full h-full object-cover rounded-lg shadow-lg">
-          <img src="https://as2.ftcdn.net/v2/jpg/04/08/50/65/1000_F_408506528_lMphp9hjmruKJhAV7BgHLsLqgepMTe14.jpg" alt="Destination Image 2" class="w-full h-full object-cover rounded-lg shadow-lg">
+          <img src="https://as1.ftcdn.net/v2/jpg/03/58/18/28/1000_F_358182819_02Atx6XYRuylicLrNs6KARyGj7wPimmY.jpg"
+            alt="Destination Image 1" class="w-full h-full object-cover rounded-lg shadow-lg">
+          <img src="https://as2.ftcdn.net/v2/jpg/04/08/50/65/1000_F_408506528_lMphp9hjmruKJhAV7BgHLsLqgepMTe14.jpg"
+            alt="Destination Image 2" class="w-full h-full object-cover rounded-lg shadow-lg">
         </div>
         <div>
-          <img src=".././assets/photo-collage.png-min.png" alt="Destination Image 3" class="w-full h-full object-cover rounded-lg shadow-lg">
+          <img src=".././assets/photo-collage.png-min.png" alt="Destination Image 3"
+            class="w-full h-full object-cover rounded-lg shadow-lg">
         </div>
       </div>
     </div>
   </div>
 </section>
-<hr><hr>
+<hr>
+<hr>
 
 <!-- Map And Footer -->
-<section  class="bg-white py-10">
+<section class="bg-white py-10">
   <div class="container mx-auto px-4">
     <!-- Section Title -->
     <h2 class="text-5xl font-extrabold text-gray-800 text-center mb-5">Get in Touch with KiteCab</h2>
     <p class="text-lg text-gray-600 text-center mb-10 max-w-2xl mx-auto">
-      We’re here to assist you with your travel needs. Whether you have questions or need support, reach out to us anytime!
+      We’re here to assist you with your travel needs. Whether you have questions or need support, reach out to us
+      anytime!
     </p>
 
     <!-- Map Placeholder -->
     <div class="mt-12">
-      <iframe class="w-full h-72 rounded-lg shadow-lg" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.1359209521374!2d81.63758437753248!3d21.18675883208366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a28dc6372256a55%3A0xf98bf67398dd7329!2sAnantra%20Homes!5e0!3m2!1sen!2sin!4v1730479859359!5m2!1sen!2sin" frameborder="0" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe class="w-full h-72 rounded-lg shadow-lg"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.1359209521374!2d81.63758437753248!3d21.18675883208366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a28dc6372256a55%3A0xf98bf67398dd7329!2sAnantra%20Homes!5e0!3m2!1sen!2sin!4v1730479859359!5m2!1sen!2sin"
+        frameborder="0" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </section>
-
-
-
-
-
-
