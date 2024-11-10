@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="flex justify-between items-center">
     <!-- Logo Section -->
     <div class="relative mb-4 right-5 cursor-pointer" routerLink="/home">
-      <img src="../assets/logo.png" height="100" width="280" alt="Logo">
+      <img src="https://i.postimg.cc/8kw15hwF/logo.png" height="100" width="280" alt="Logo">
     </div>
   
     <!-- Hamburger Menu for Mobile -->
@@ -16,7 +16,7 @@
       <button mat-button class="text-white" (click)="scrollToAbout('about')">About</button>
       <button mat-button class="text-white" (click)="scrollToPlaces('places')">Places</button>
       <button mat-button class="text-white" (click)="scrollToContact('contact')">Contact</button>
-      <button mat-button class="text-white" (click)="openLoginDialog('admin')">Admin Login</button>
+      <button mat-button class="text-white" (click)="scrollToContact('contact')">More Info</button>
     </div>
   
     <!-- Mobile Menu (ngIf for toggling) -->
@@ -26,7 +26,6 @@
       <button mat-button class="text-white" (click)="scrollToAbout('about')">About</button>
       <button mat-button class="text-white" (click)="scrollToPlaces('places')">Places</button>
       <button mat-button class="text-white" (click)="scrollToContact('contact')">Contact</button>
-      <button mat-button class="text-white" (click)="openLoginDialog('admin')">Admin Login</button>
       <button mat-button class="text-white" (click)="openLoginDialog('driver')">Driver Login</button>
     </div>
     }

@@ -28,8 +28,7 @@ export class LoginComponent implements OnInit {
     this.isAdmin = this.data.key === 'admin' ? true : false;
     // Initialize forms
     this.adminForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      adminId: ['', [Validators.required]]
     });
 
     this.driverForm = this.fb.group({
@@ -49,11 +48,11 @@ export class LoginComponent implements OnInit {
   onLogin(userType: string) {
     if (userType === 'admin' && this.adminForm.valid) {
       if (this.adminForm.valid) {
-        const { email, password } = this.adminForm.value;
-        if (this.authService.login(email, password)) {
+        const  {adminId} = this.adminForm.value;
+        if (this.authService.login(adminId)) {
           this.dialog.closeAll();
         } else {
-          alert('Invalid email or password!'); // Notify user of invalid credentials
+          alert('Invalid Id!'); // Notify user of invalid credentials
         }
       }
     } else if (userType === 'driver' && this.driverForm.valid) {

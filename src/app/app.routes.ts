@@ -4,7 +4,7 @@ import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
     {
-        path:'admin',
+        path:'ec-admin00',
         loadComponent: ()=> import('../app/admin-panel/admin-panel.component').then((m) => m.AdminPanelComponent),
         canActivate:[authGuard]
     },
