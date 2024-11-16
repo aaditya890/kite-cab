@@ -1,0 +1,12 @@
+ objectToRemove =   {
+      id: id,
+      price: objectToRemove.price,
+      active: objectToRemove.active,
+      pickup: objectToRemove.pickup,
+      dropoff: objectToRemove.dropoff,
+      distance: objectToRemove.distance,
+      suvPrice: objectToRemove.suvPrice,
+      sedanPrice: objectToRemove.sedanPrice
+    }
+
+re_HG2VAvxE_5MS5XqYVDWXKDMayT2bzbtUD

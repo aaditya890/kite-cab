@@ -15,8 +15,8 @@ export class DialogCallComponent {
   number = '+91 6263676216';
 
   constructor(private snackBar: MatSnackBar) { }
-  
-  callNumber() {
+
+  public callNumber():void {
     const phoneNumber = '+916263676216';
     window.location.href = `tel:${phoneNumber}`;
   }

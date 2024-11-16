@@ -27,7 +27,7 @@ export interface PriceDialogData {
   selector: 'app-cab-round-trip-dialog',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, NgxMatTimepickerModule, MatSelectModule, MatInputModule, MatIconModule, MatDialogActions, MatDialogClose, MatDialogContent, MatButtonModule, MatDialogTitle,],
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, NgxMatTimepickerModule, MatSelectModule, MatInputModule, MatIconModule,MatDialogClose, MatDialogContent, MatButtonModule, MatDialogTitle,],
   templateUrl: './cab-round-trip-dialog.component.html',
   styleUrls: ['./cab-round-trip-dialog.component.scss']
 })
@@ -115,4 +115,9 @@ export class CabRoundTripDialogComponent implements OnInit {
 
     this.locationService.addCustomerRecord(payload).subscribe(response => {});
   }
+  
+  public reloadPage():void{
+    window.location.reload()
+  }
+  
 }

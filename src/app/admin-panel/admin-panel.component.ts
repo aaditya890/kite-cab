@@ -17,6 +17,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { AuthService } from '../auth.service';
+
+
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
@@ -37,26 +39,20 @@ export class AdminPanelComponent implements OnInit {
   customerRecords: any[] = [];
   filteredRecords = [...this.customerRecords];
   showCustomerRecordEditForm: boolean = false
-  chips = [
-    { key: 'onway', label: 'Onway Package' },
-    { key: 'rental', label: 'Rental Package' },
-    { key: 'customer', label: 'Customer Record' },
-    { key: 'enquiry', label: 'Customer Enquiry' }
-  ];
-  selectedChip = this.chips[2];
-  displayedEnquiryColumns: string[] = ['pickupLocation', 'DropLocationOrPackages', 'mobileNumber', 'delete'];
+  chips = [{ key: 'onway', label: 'Onway Package' }, { key: 'rental', label: 'Rental Package' }, { key: 'customer', label: 'Customer Record' }, { key: 'enquiry', label: 'Customer Enquiry' }];
+  selectedChip = this.chips[3];
+  displayedEnquiryColumns: string[] = ['pickupLocation', 'DropLocationOrPackages', 'time', 'date', 'mobileNumber', 'delete'];
   enquiryDataSource = new MatTableDataSource<any>();
   displayedBookingDetailColumns: string[] = ['id', 'customerDetail', 'bookingDetail', 'actions'];
-  displayedColumns: string[] = [
-    'pickup', 'dropoff', 'price', 'sedanPrice', 'suvPrice', 'distance', 'active', 'actions'
-  ];
+  displayedColumns: string[] = ['pickup', 'dropoff', 'price', 'sedanPrice', 'suvPrice', 'distance', 'active', 'actions'];
 
   constructor(
     private fb: FormBuilder,
     private locationService: LocationService,
     private snackBar: MatSnackBar,
-    private authService:AuthService
+    private authService: AuthService
   ) {
+
     this.priceForm = this.fb.group({
       pickup: ['', Validators.required],
       dropoff: ['', Validators.required],
@@ -64,7 +60,7 @@ export class AdminPanelComponent implements OnInit {
       sedanPrice: ['', Validators.required],
       suvPrice: ['', Validators.required],
       distance: ['', Validators.required],
-      active: [true]
+      active: [false]
     });
 
     this.rentalForm = this.fb.group({
@@ -74,7 +70,6 @@ export class AdminPanelComponent implements OnInit {
       sedanPrice: ['', Validators.required],
       suvPrice: ['', Validators.required]
     });
-
 
     this.customerRecordEditForm = this.fb.group({
       customerDetail: this.fb.group({
@@ -105,42 +100,53 @@ export class AdminPanelComponent implements OnInit {
     this.loadLocationPrices();
     this.loadRentalPackages();
     this.fetchCustomerRecords();
-    this.showAllRecords();
     this.loadEnquiryData();
+    setTimeout(() => { this.showAllRecords() }, 1000)
   }
 
-  loadLocationPrices(): void {
+  //------------------------- One-Way Location and Prices Fields -------------------------------------------------   
+
+  // To load one-way location and prices
+  public loadLocationPrices(): void {
     this.locationService.getLocationPrices().subscribe({
-      next: (data: any) => (this.locationPrices = data),
-      error: (err) => this.snackBar.open('Error loading location prices', 'Close', { duration: 3000 })
+      next: (prices) => {
+        this.locationPrices = prices;
+      },
+      error: (error) => {
+        console.error('Error loading location prices:', error);
+        this.snackBar.open('Failed to load location prices', 'Close', { duration: 3000 });
+      }
     });
   }
 
-  loadRentalPackages(): void {
-    this.locationService.getRentalPackages().subscribe({
-      next: (data) => (this.localRentalPackages = data),
-      error: (err) => this.snackBar.open('Error loading rental packages', 'Close', { duration: 3000 })
-    });
-  }
-
-  addLocationPrice(): void {
+  // To add locations and cab prices
+  public addLocationPrice(): void {
     const newPrice = this.priceForm.value;
-    // Check if in edit mode
+    console.log(newPrice)
+    // Check if we are in edit mode
     if (this.editingId !== null && this.editingId !== undefined) {
-      this.updateLocationPrice(newPrice);  // Call helper function to handle update
+      this.updateLocationPrice(newPrice);  // Update location
     } else {
-      this.checkAndAddLocationPrice(newPrice);  // Call helper function to handle adding
+      this.checkAndAddLocationPrice(newPrice);  // Add location (check for reverse)
     }
   }
 
-  // Helper function to update an existing location price
-  private updateLocationPrice(price: any): void {
-    this.locationService.updateLocationPrice(this.editingId, price).subscribe({
+  // To update one way locations and cab prices
+  public updateLocationPrice(price: any): void {
+    const locationPrice = {
+      active: price.active,
+      distance: price.distance,
+      dropoff: price.dropoff,
+      pickup: price.pickup,
+      price: price.price,
+      sedanPrice: price.sedanPrice,
+      suvPrice: price.suvPrice,
+    };
+
+    this.locationService.updateLocationPrice(this.editingId, locationPrice).subscribe({
       next: () => {
-        this.loadLocationPrices();         // Refresh list after updating
-        this.clearPriceForm();              // Clear the form after submission
+        this.loadLocationPrices();
         this.snackBar.open("Location price updated successfully.", "Close", { duration: 3000 });
-        this.editingId = null;              // Exit edit mode
       },
       error: (error) => {
         console.error('Failed to update location price:', error);
@@ -149,15 +155,15 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  // Helper function to check for reverse entry and add location prices accordingly
-  private checkAndAddLocationPrice(price: any): void {
+  // Check for reverse entry and add location prices accordingly
+  public checkAndAddLocationPrice(price: any): void {
     this.locationService.checkReverseLocation(price.pickup, price.dropoff).subscribe({
       next: (exists) => {
         if (exists) {
           this.snackBar.open("Reverse entry already exists. Only original entry will be added.", "Close", { duration: 3000 });
-          this.addSingleLocationPrice(price);  // Add the original price only
+          this.addSingleLocationPrice(price);  // Add only the original entry
         } else {
-          this.addOriginalAndReversePrices(price);  // Add both original and reverse entries
+          this.addOriginalAndReversePrices(price);  // Add both the original and reverse entries
         }
       },
       error: (error) => {
@@ -167,12 +173,12 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  // Helper function to add only the original location price
-  private addSingleLocationPrice(price: any): void {
+  // Add only the original location price
+  public addSingleLocationPrice(price: any): void {
     this.locationService.addLocationPrice(price).subscribe({
       next: () => {
-        this.loadLocationPrices();
-        this.clearPriceForm();
+        this.loadLocationPrices();  // Refresh list after adding
+        this.clearPriceForm();      // Clear the form
         this.snackBar.open("Location price added successfully.", "Close", { duration: 3000 });
       },
       error: (error) => {
@@ -182,16 +188,24 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  // Helper function to add both original and reverse location prices
-  private addOriginalAndReversePrices(price: any): void {
+  // Add both the original and reverse location prices
+  public addOriginalAndReversePrices(price: any): void {
+    // First, add the original location price
     this.locationService.addLocationPrice(price).subscribe({
       next: () => {
-        const reversePrice = { ...price, pickup: price.dropoff, dropoff: price.pickup };
+        // Create reverse price by swapping pickup and dropoff and generating a new ID
+        const reversePrice = {
+          ...price,
+          id: this.generateRandomId(), // Ensure a unique ID for the reverse entry
+          pickup: price.dropoff,
+          dropoff: price.pickup,
+        };
 
+        // Add the reverse location price
         this.locationService.addLocationPrice(reversePrice).subscribe({
           next: () => {
-            this.loadLocationPrices();
-            this.clearPriceForm();
+            this.loadLocationPrices();  // Refresh the list after adding both prices
+            this.clearPriceForm();      // Clear the form
             this.snackBar.open("Location price and reverse entry added successfully.", "Close", { duration: 3000 });
           },
           error: (error) => {
@@ -207,17 +221,22 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  // Method to edit a location price by setting the form values and editing ID
-  editLocationPrice(location: any): void {
-    this.editingId = location.id;
-    this.priceForm.patchValue(location);
+  // Generate random id for adding fields
+  public generateRandomId(): any {
+    return Math.floor(Math.random() * 1000000); // Generate a random integer ID
   }
 
-  // Method to delete a location price and refresh the list upon success
-  deleteLocationPrice(id: number): void {
+  // Edit an existing location price by setting the form values and editing ID
+  public editLocationPrice(location: any): void {
+    this.editingId = location.id;  // Set the editing ID
+    this.priceForm.patchValue(location);  // Patch the values to the form
+  }
+
+  // Delete a location price and refresh the list upon success
+  public deleteLocationPrice(id: any): void {
     this.locationService.deleteLocationPrice(id).subscribe({
       next: () => {
-        this.loadLocationPrices();
+        this.loadLocationPrices();  // Refresh list after deletion
         this.snackBar.open('Location price deleted successfully', 'Close', { duration: 3000 });
       },
       error: (err) => {
@@ -227,12 +246,23 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  addRentalPackage(): void {
+  //---------------------------------- Rental Package Fields --------------------------------------------------- 
+
+  // Load all records of rental package fields
+  public loadRentalPackages(): void {
+    this.locationService.getRentalPackages().subscribe({
+      next: (data) => (this.localRentalPackages = data),
+      error: (err) => this.snackBar.open('Error loading rental packages', 'Close', { duration: 3000 })
+    });
+  }
+
+  // Add rental package fields and prices
+  public addRentalPackage(): void {
     if (this.rentalForm.invalid) {
       this.snackBar.open('Form is invalid', 'Close', { duration: 3000 });
       return;
     }
-    const rentalData = this.rentalForm.value;
+    let rentalData: any = this.rentalForm.value;
     if (this.editingRentalId) {
       this.locationService.updateRentalPackage(this.editingRentalId, rentalData).subscribe({
         next: () => {
@@ -254,25 +284,33 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  editRentalPackage(rentalPackage: any): void {
+  //  Edit rental package fields and prices
+  public editRentalPackage(rentalPackage: any): void {
     this.editingRentalId = rentalPackage.id;
     this.rentalForm.patchValue(rentalPackage);
   }
 
-  deleteRentalPackage(id: number): void {
+  // Delete rental package field
+  public deleteRentalPackage(id: number): void {
     this.locationService.deleteRentalPackage(id).subscribe({
       next: () => {
         this.loadRentalPackages();
         this.snackBar.open('Rental package deleted successfully', 'Close', { duration: 3000 });
       },
-      error: (err) => this.snackBar.open('Error deleting rental package', 'Close', { duration: 3000 })
+      error: (err) => {
+        console.error('Error deleting rental package:', err.message);
+        this.snackBar.open('Error deleting rental package', 'Close', { duration: 3000 });
+      }
     });
   }
 
-  fetchCustomerRecords(): void {
+  //---------------------------------- Customer Record Fields ---------------------------------------------------  
+
+  // Fetch all customer record entry
+  public fetchCustomerRecords(): void {
     this.locationService.getCustomerRecord().subscribe((records) => {
       // Format pickup dates for display
-      this.customerRecords = records.map(record => ({
+      this.customerRecords = records.reverse().map(record => ({
         ...record,
         customerDetail: {
           ...record.customerDetail,
@@ -288,11 +326,10 @@ export class AdminPanelComponent implements OnInit {
     })
   };
 
-  // Edit customer record
-  editCustomer(record: any): void {
+  // Edit customer record entry and prices
+  public editCustomer(record: any): void {
     this.showCustomerRecordEditForm = true;
     this.editingId = record.id; // Store the ID for save functionality
-
     // Format the pickup date, handling undefined cases
     const pickupDate = record.customerDetail?.pickupDate
       ? new Date(record.customerDetail.pickupDate).toLocaleDateString('en-US', {
@@ -327,15 +364,14 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  filterByDate(date: any) {
+  // Show customer record by selected date 
+  public filterByDate(date: any): void {
     if (date) {
       const selectedDate = new Date(date).toLocaleDateString("en-US");
       this.filteredRecords = this.customerRecords.filter((record: any) => {
         const recordPickupDate = new Date(record.customerDetail.pickupDate).toLocaleDateString("en-US");
-
         return recordPickupDate === selectedDate;
       });
-
       // Show snackbar if no records are found for the selected date
       if (this.filteredRecords.length === 0) {
         this.snackBar.open('No records found for the selected date', 'Close', {
@@ -351,13 +387,13 @@ export class AdminPanelComponent implements OnInit {
   }
 
   // Reset to show all records
-  showAllRecords() {
+  public showAllRecords(): void {
     this.fetchCustomerRecords();
     this.filteredRecords = [...this.customerRecords];
   }
 
-  // Save edited customer record
-  saveEdit(): void {
+  // Save edited customer record entry
+  public saveEdit(): void {
     if (this.customerRecordEditForm.valid && this.editingId) {
       const updatedData = this.customerRecordEditForm.value;
 
@@ -390,114 +426,137 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  // Delete customer record
-  deleteCustomer(id: string): void {
+  // Delete customer record entry
+  public deleteCustomer(id: any): void {
     this.locationService.deleteCustomerRecord(id).subscribe(() => {
       this.customerRecords = this.customerRecords.filter(record => record.id !== id);
+      this.fetchCustomerRecords()
+      window.location.reload()
       this.snackBar.open('Customer record deleted successfully!', 'Close', { duration: 2000 });
     });
   }
 
-  // Download customer record as a PDF
-  downloadRecord(recordId: string): void {
+  // Download the pdf
+  public downloadRecord(recordId: any): void {
     const record = this.customerRecords.find(r => r.id === recordId);
-
+  
     if (record) {
-      const doc = new jsPDF();
-
-      // Set up document metadata
-      doc.setProperties({
-        title: `${record.customerDetail.fullName}'s Booking Record - KiteCab`
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+        compress: true,
       });
-
-      // Header section with company name and logo
+  
+      // Header Section
+      doc.setFont("helvetica", "bold");
       doc.setFontSize(18);
-      doc.text('KiteCab - Customer Booking Record', 105, 15, { align: 'center' });
+      doc.text('KITECAB', 10, 15);
+  
+      doc.setFont("helvetica", "light");
       doc.setFontSize(10);
-      doc.text('Reliable Cab Service', 105, 22, { align: 'center' });
-
-      // Adding a separator line below the header
-      doc.setLineWidth(0.5);
-      doc.line(10, 25, 200, 25);
-
-      // Space before customer details
+      doc.text('Your Way, Our Goal', 10, 20);
+  
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text('Contact: +916263676216 | Website: www.kitecab.com', 10, 25);
+      doc.text('Address: Kandul Road, Sejbahar, Kamal Vihar, Raipur (C.G)', 10, 30);
+  
+      // Invoice Title & Date
+      doc.setFont("helvetica", "bold");
       doc.setFontSize(12);
-      doc.text(`${record.customerDetail.fullName}'s Booking Details`, 14, 35);
-
-      // Define the body data for the table, with special styling for the "Price" row
-      const bodyData = [
+      doc.text('INVOICE', 105, 40, { align: 'center' });
+      doc.setFont("helvetica", "normal");
+      doc.text(`Invoice Date: ${new Date().toLocaleDateString()}`, 160, 40);
+  
+      // Separator Line
+      doc.setLineWidth(0.5);
+      doc.line(10, 45, 200, 45);
+  
+      // Table-Like Layout for Details
+      const details = [
         ['Full Name', record.customerDetail.fullName],
-        ['Pickup Date', record.customerDetail.pickupDate],
-        ['Pickup Time', record.customerDetail.pickupTime],
-        ['Pickup Address', record.customerDetail.pickupAddress],
-        ['Number of Passengers', record.customerDetail.numberOfPassengers],
+        ['Mobile', record.customerDetail.mobileNumber],
         ['Email', record.customerDetail.email],
-        ['Mobile Number', record.customerDetail.mobileNumber],
+        ['Pickup Date & Time', `${record.customerDetail.pickupDate} | ${record.customerDetail.pickupTime}`],
+        ['Pickup Address', record.customerDetail.pickupAddress],
         ['Booking Type', record.bookingDetail.bookingType],
         ['Car Type', record.bookingDetail.carType],
         ['Pickup Location', record.bookingDetail.pickupLocation],
         ['Drop Location', record.bookingDetail.dropLocation || 'N/A'],
-        [
-          'Price',
-          `${record.bookingDetail.price} Rupee`,
-          { textColor: [255, 0, 0], fontStyle: 'bold', fillColor: [200, 255, 200] } // Medium highlight: red text, bold, light gray background
-        ],
         ['Distance', `${record.bookingDetail.distance} km`],
-        ['Waiting Time', `${record.bookingDetail.waitingTime || 'N/A'} minutes`],
+        ['Waiting Time', `${record.bookingDetail.waitingTime || 'N/A'} min`],
         ['Approx Distance', `${record.bookingDetail.approxDistance || 'N/A'} km`],
-        ['Package', record.bookingDetail.package || 'N/A']
+        ['Package', record.bookingDetail.package || 'N/A'],
       ];
-
-      // AutoTable with styling and custom row highlight for Price
-      autoTable(doc, {
-        startY: 40,
-        headStyles: { fillColor: [0, 123, 255] }, // Blue color for header background
-        styles: { fontSize: 10, cellPadding: 3 }, // Smaller font and padding for table cells
-        head: [['Field', 'Details']],
-        body: bodyData,
-        didParseCell: (data) => {
-          // Check if this is the "Price" row and apply custom style
-          if (data.cell.raw === `${record.bookingDetail.price} Rupee`) {
-            data.cell.styles.fontStyle = 'bold';
-            data.cell.styles.textColor = [255, 0, 0]; // Red color text
-            data.cell.styles.fillColor = [240, 240, 240]; // Light gray background
-          }
-        },
-        theme: 'striped'
+  
+      let startY = 50;
+  
+      details.forEach(([label, value]) => {
+        doc.setFont("helvetica", "bold");
+        doc.text(`${label}:`, 10, startY);
+        doc.setFont("helvetica", "normal");
+        doc.text(value, 60, startY);
+        startY += 7;
       });
-
-      // Footer with company contact information
+  
+      // Highlight Total Price with Underline
+      startY += 5;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text(`Total Price: ${record.bookingDetail.price} Rupee`, 10, startY);
+      doc.setLineWidth(0.5);
+      doc.line(10, startY + 1, 80, startY + 1); // Underline for price
+  
+      // Footer Section - Compact
+      startY += 10;
+      doc.setLineWidth(0.5);
+      doc.line(10, startY, 200, startY); // Footer Separator Line
+      startY += 5;
+  
+      doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
-      doc.text('Thank you for choosing KiteCab!', 105, doc.internal.pageSize.height - 20, { align: 'center' });
-      doc.setFontSize(8);
-      doc.text('Contact Us: +916263676216 | kitecab00@gmail.com', 105, doc.internal.pageSize.height - 10, { align: 'center' });
+      doc.text('Thank you for choosing KiteCab!', 105, startY, { align: 'center' });
+      startY += 5;
+      doc.text('For inquiries, visit our website or contact support@kitecab.com.', 105, startY, { align: 'center' });
+  
       // Save the PDF
-      doc.save(`${record.customerDetail.fullName}-KiteCab-Booking.pdf`);
+      doc.save(`${record.customerDetail.fullName}-KiteCab-Receipt.pdf`);
     } else {
       console.error('Record not found for downloading');
     }
   }
+    
+  //---------------------------------- Customer Enquiry Filed ---------------------------------------------------   
 
-  loadEnquiryData(): void {
+  // Load all customer enquiry data 
+  public loadEnquiryData(): void {
     this.locationService.getEnquiryRecord().subscribe({
       next: (data) => {
-        this.enquiryDataSource.data = data;
+        this.enquiryDataSource.data = data.reverse();
       },
       error: (err) => console.error('Error fetching enquiry records:', err)
     });
   }
 
-  deleteEnquiry(id: string): void {
+  // Delete customer enquiry field
+  public deleteEnquiry(id: string): void {
     this.locationService.deleteEnquiryRecord(id).subscribe(
       (response) => {
-        this.snackBar.open('Enquiry deleted successfully', "DISMISS", {
-          duration: 3000
-        });
-        const data = this.enquiryDataSource.data.filter((enquiry) => enquiry.id !== id);
-        this.enquiryDataSource.data = data;
+        this.snackBar.open('Enquiry deleted successfully', "DISMISS", { duration: 3000 });
+        // Filter the deleted item from the data source
+        this.enquiryDataSource.data = this.enquiryDataSource.data.filter((enquiry) => enquiry.id !== id);
+
       },
       (error) => console.error('Error deleting enquiry', error)
     );
+  }
+
+  //---------------------------------- Other Fields --------------------------------------------------- 
+
+  // Refresh the page
+  public reloadPage(): void {
+    window.location.reload()
   }
 
   private clearPriceForm(): void {
@@ -510,11 +569,11 @@ export class AdminPanelComponent implements OnInit {
     this.editingRentalId = null;
   }
 
-  selectChip(chip: any) {
+  public selectChip(chip: any): void {
     this.selectedChip = chip;
   }
 
-  adminLogout(){
+  public adminLogout(): void {
     this.authService.logout()
   }
 }
