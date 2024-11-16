@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   isAdmin: Boolean = false;
   driverRegistrationForm!: FormGroup;
   showRegistrationForm: boolean = false;
-  constructor(private fb: FormBuilder, private router: Router,private authService:AuthService,public dialog:MatDialog) { }
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.isAdmin = this.data.key === 'admin' ? true : false;
@@ -45,10 +45,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onLogin(userType: string) {
+  public onLogin(userType: string): void {
     if (userType === 'admin' && this.adminForm.valid) {
       if (this.adminForm.valid) {
-        const  {adminId} = this.adminForm.value;
+        const { adminId } = this.adminForm.value;
         if (this.authService.login(adminId)) {
           this.dialog.closeAll();
         } else {
@@ -61,17 +61,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onRegisterDriver() {
+  public onRegisterDriver(): void {
     this.showRegistrationForm = true
   }
 
-  onSubmitRegistration(): void {
+  public onSubmitRegistration(): void {
     if (this.driverRegistrationForm.valid) {
       // console.log("Driver Registration: ", this.driverRegistrationForm.value);
       this.driverRegistrationForm.reset(); // Reset the form after successful registration
       this.showRegistrationForm = false; // Hide the registration form after submission 
     }
   }
-
-
+  
 }

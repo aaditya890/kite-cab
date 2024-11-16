@@ -16,11 +16,11 @@ export class FooterComponent {
   email: string = "kiteCab00@gmail.com"
   constructor(private locationService:LocationService, private dialog:MatDialog,private router:Router,private authService:AuthService){}
   
-  scrollToPlaces(id: string) {
+  public scrollToPlaces(id: string):void {
     this.locationService.scrollToElement(id)
   }
 
-  openLoginDialog(key: string) {
+  public openLoginDialog(key: string):void {
     const checkAdminLs = localStorage.getItem("admin");
   
     if (checkAdminLs) {
@@ -34,7 +34,7 @@ export class FooterComponent {
     }
   }  
 
-  scrollToAbout(id: string) {
+  public scrollToAbout(id: string):void {
     this.locationService.scrollToElement(id)
   }
 }

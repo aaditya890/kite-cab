@@ -47,7 +47,7 @@
           <input matInput formControlName="pickupLocation" [matAutocomplete]="onwayPickup"
             placeholder="Pickup Location">
           <mat-autocomplete #onwayPickup="matAutocomplete">
-            @for (field of pickupFields; track $index) {
+            @for (field of filteredOnwayPickupFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -55,7 +55,7 @@
         <mat-form-field appearance="outline" class="w-full" style="max-width: 300px;">
           <input matInput formControlName="dropLocation" [matAutocomplete]="onwayDrop" placeholder="Drop Location">
           <mat-autocomplete #onwayDrop="matAutocomplete">
-            @for (field of dropFields; track $index) {
+            @for (field of filteredOnwayDropFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -87,7 +87,7 @@
           <input matInput formControlName="pickupLocation" [matAutocomplete]="onwayPickup"
             placeholder="Pickup Location">
           <mat-autocomplete #onwayPickup="matAutocomplete">
-            @for (field of pickupFields; track $index) {
+            @for (field of filteredRoundTripPickupFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -95,7 +95,7 @@
         <mat-form-field appearance="outline" class="w-full" style="max-width: 300px;">
           <input matInput formControlName="dropLocation" [matAutocomplete]="drop" placeholder="Drop Location">
           <mat-autocomplete #drop="matAutocomplete">
-            @for (field of dropFields; track $index) {
+            @for (field of filteredRoundTripDropFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>
@@ -143,7 +143,7 @@
           <input matInput formControlName="pickupLocation" [matAutocomplete]="localRentalPickup"
             placeholder="Pickup Location" class="py-1 px-2 text-sm">
           <mat-autocomplete #localRentalPickup="matAutocomplete">
-            @for (field of pickupFields; track $index) {
+            @for (field of filteredLocalRentalPickupFields; track $index) {
             <mat-option [value]="field">{{field}}</mat-option>
             }
           </mat-autocomplete>

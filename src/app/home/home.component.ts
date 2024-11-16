@@ -17,13 +17,13 @@ import { CabRoundTripDialogComponent } from '.././cab-round-trip-dialog/cab-roun
 import { LocationService } from '.././location.service';
 import { CabRentalDialogComponent } from '.././cab-rental-dialog/cab-rental-dialog.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { map, startWith, filter } from 'rxjs';
+import { map, startWith, filter, forkJoin } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatSnackBarModule, CommonModule, MatTooltipModule, MatAutocomplete, MatAutocompleteModule, MatIconModule, MatChipsModule, MatButtonModule, MatSelectModule, MatFormFieldModule, MatInput, MatInputModule, ReactiveFormsModule, FormsModule],
+  imports: [MatSnackBarModule, MatAutocompleteModule, CommonModule, MatTooltipModule, MatAutocomplete, MatAutocompleteModule, MatIconModule, MatChipsModule, MatButtonModule, MatSelectModule, MatFormFieldModule, MatInput, MatInputModule, ReactiveFormsModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -57,8 +57,8 @@ export class HomeComponent {
   ) { }
 
   ngOnInit(): void {
-    this.getDataFromService();
-    this.getLocalRentalData();
+    this.initializeData();
+
     this.oneWayForm = this.fb.group({
       pickupLocation: ['', [Validators.required]],
       dropLocation: ['', [Validators.required]],
@@ -79,6 +79,44 @@ export class HomeComponent {
       mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
     });
 
+  }
+
+  // Function to fetch data and set up autocomplete after data is ready
+  private initializeData(): void {
+    // Use forkJoin to wait for both observables to complete
+    forkJoin([
+      this.locationService.getLocationPrices(),
+      this.locationService.getRentalPackages()
+    ]).subscribe(([locationData, rentalData]) => {
+      this.processLocationData(locationData);
+      this.rentalFieldData = rentalData;
+
+      // Set up autocomplete options after data has been loaded
+      this.setupAutoCompleteOptions();
+    }, error => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
+  // Return autocomplete filtered data 
+  private _filter(value: string, options: string[]): string[] {
+    const filterValue = value.toLowerCase();
+    return options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  // Filter autocomplete data 
+  public filteredAutoCompleteOptions(originalArray: string[], filteredArray: string[], control: FormControl): void {
+    control.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '', originalArray))
+    ).subscribe(filteredResults => {
+      filteredArray.length = 0;
+      filteredArray.push(...filteredResults);
+    }, error => console.error('Error in valueChanges subscription:', error));
+  }
+
+  // Initialize autocomplete functionality for each form control
+  private setupAutoCompleteOptions(): void {
     this.filteredAutoCompleteOptions(this.pickupFields, this.filteredOnwayPickupFields, this.oneWayForm.get('pickupLocation') as FormControl);
     this.filteredAutoCompleteOptions(this.dropFields, this.filteredOnwayDropFields, this.oneWayForm.get('dropLocation') as FormControl);
     this.filteredAutoCompleteOptions(this.pickupFields, this.filteredRoundTripPickupFields, this.roundTripForm.get('pickupLocation') as FormControl);
@@ -86,74 +124,34 @@ export class HomeComponent {
     this.filteredAutoCompleteOptions(this.pickupFields, this.filteredLocalRentalPickupFields, this.localRentalForm.get('pickupLocation') as FormControl);
   }
 
-  private _filter(value: string, array: string[]): string[] {
-    const filterValue = value.toLowerCase();
-    return array.filter(option => option.toLowerCase().includes(filterValue));
-  }
+  // Process location data and populate pickup and drop fields
+  private processLocationData(data: any[]): void {
+    const pickupSet = new Set<string>();
+    const dropSet = new Set<string>();
 
-  public filteredAutoCompleteOptions(originalArray: string[], filteredArray: string[], control: FormControl): void {
-    control.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '', originalArray))
-    ).subscribe(filteredResults => {
-      filteredArray.length = 0; filteredArray.push(...filteredResults);
+    data.forEach(item => {
+      const { pickup, dropoff, price, sedanPrice, suvPrice, distance, active } = item;
+
+      if (!this.locations[pickup]) {
+        this.locations[pickup] = {};
+      }
+      this.locations[pickup][dropoff] = {
+        price,
+        sedanPrice,
+        suvPrice,
+        distance,
+        active: active !== false,
+      };
+
+      pickupSet.add(pickup);
+      dropSet.add(dropoff);
     });
+
+    this.pickupFields = Array.from(pickupSet);
+    this.dropFields = Array.from(dropSet);
   }
 
-  public getLocalRentalData() {
-    this.locationService.getRentalPackages().subscribe((res: any[]) => {
-      this.rentalFieldData = res;
-    })
-  }
-
-  private getDataFromService(): void {
-    this.locationService.getLocationPrices().subscribe({
-      next: (data) => {
-        const pickupSet = new Set<string>();
-        const dropSet = new Set<string>();
-  
-        // Process the API data
-        for (const item of data) {
-          const { pickup, dropoff, price, sedanPrice, suvPrice, distance, active } = item;
-  
-          if (!this.locations[pickup]) {
-            this.locations[pickup] = {};
-          }
-          this.locations[pickup][dropoff] = {
-            price,
-            sedanPrice,
-            suvPrice,
-            distance,
-            active: active !== false,
-          };
-  
-          pickupSet.add(pickup);
-          dropSet.add(dropoff);
-        }
-  
-        this.pickupFields = Array.from(pickupSet);
-        this.dropFields = Array.from(dropSet);
-      },
-      error: (err) => console.error('Error fetching data:', err)
-    });
-  }
-
-  public bookingByCall(): void {
-    this.dialog.open(DialogCallComponent, {});
-  }
-
-  public bookingByWhatsapp(): void {
-    const phoneNumber = "+916263676216";
-    const message = `Hi! I would like to proceed with a cab booking. Please confirm the car availability and provide the fare details.`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, "_blank");
-  }
-
-  public toggleForm(formType: string): void {
-    this.activeForm = formType;
-  }
-
+  // check fare action for all forms
   public checkCabPrice(formType: string): void {
     let pickupLocation: string;
     let dropLocation: string;
@@ -161,22 +159,23 @@ export class HomeComponent {
     if (formType === 'oneWay' && this.oneWayForm.valid) {
       pickupLocation = this.oneWayForm.value.pickupLocation;
       dropLocation = this.oneWayForm.value.dropLocation;
-       this.registerForEnquiry(pickupLocation,dropLocation,this.oneWayForm.value.mobileNumber)
+      this.registerForEnquiry(pickupLocation, dropLocation, this.oneWayForm.value.mobileNumber)
       this.onWayCheckFare(pickupLocation, dropLocation);
     } else if (formType === 'roundTrip' && this.roundTripForm.valid) {
       pickupLocation = this.roundTripForm.value.pickupLocation;
       dropLocation = this.roundTripForm.value.dropLocation;
-      this.registerForEnquiry(pickupLocation,dropLocation,this.roundTripForm.value.mobileNumber)
+      this.registerForEnquiry(pickupLocation, dropLocation, this.roundTripForm.value.mobileNumber)
       this.roundTripFare(pickupLocation, dropLocation);
     } else if (formType === 'localRental' && this.localRentalForm.valid) {
       this.localRentalFare();
-      this.registerForEnquiry(this.localRentalForm.value.pickup,this.localRentalForm.value.package,this.localRentalForm.value.mobileNumber)
+      this.registerForEnquiry(this.localRentalForm.value.pickupLocation, this.localRentalForm.value.package, this.localRentalForm.value.mobileNumber)
     } else {
       return;
     }
   }
 
-  public onWayCheckFare(pickupLocation: string, dropLocation: string) {
+  // onway check fare action
+  public onWayCheckFare(pickupLocation: string, dropLocation: string):void {
     const locationData = this.locations[pickupLocation]?.[dropLocation];
     if (locationData && locationData.active == true) {
       this.cabPrice = locationData.price;
@@ -206,7 +205,8 @@ export class HomeComponent {
     }
   }
 
-  public roundTripFare(pickupLocation: string, dropLocation: string) {
+   // round trips check fare action
+  public roundTripFare(pickupLocation: string, dropLocation: string):void {
     const locationData = this.locations[pickupLocation]?.[dropLocation];
     if (locationData && locationData.active == true) {
       this.cabPrice = locationData.price;
@@ -238,7 +238,8 @@ export class HomeComponent {
     }
   }
 
-  public localRentalFare() {
+   // local rental check fare action
+  public localRentalFare():void {
     const selectedPackage = this.rentalFieldData.find((res) => {
       const rentalPackage = `${res.time} ${res.distance}km`.toLowerCase();
       const selectedPackage = this.localRentalForm.value.package.toLowerCase();
@@ -274,14 +275,36 @@ export class HomeComponent {
     }
   }
 
+  // Register data for customer enquiry
   public registerForEnquiry(pickupLocation: string, dropLocation: string, mobileNumber: string) {
-    const enquiryData:any = {
+    const enquiryData: any = {
       pickupLocation: pickupLocation,
       dropLocationOrPackages: dropLocation,
-      mobileNumber: mobileNumber
-    }; 
-    this.locationService.setEnquiryRecord(enquiryData).subscribe((res:any)=>{
+      mobileNumber: mobileNumber,
+      date: new Date().toLocaleDateString(),  // Current date in locale format
+      time: new Date().toLocaleTimeString()    // Current time in locale format
+    };
+    this.locationService.setEnquiryRecord(enquiryData).subscribe((res: any) => {
     })
   }
-  
+
+  // Open calling dialog
+  public bookingByCall(): void {
+    this.dialog.open(DialogCallComponent, {});
+  }
+
+  // Redirect to whatapp 
+  public bookingByWhatsapp(): void {
+    const phoneNumber = "+916263676216";
+    const message = `Hi! I would like to proceed with a cab booking. Please confirm the car availability and provide the fare details.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  }
+
+  // Show form by selected chip
+  public toggleForm(formType: string): void {
+    this.activeForm = formType;
+  }
+
 }

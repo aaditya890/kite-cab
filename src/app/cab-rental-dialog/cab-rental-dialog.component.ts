@@ -53,11 +53,11 @@ export class CabRentalDialogComponent implements OnInit {
     });
   }
 
-  public isFieldInvalid(field: string) {
+  public isFieldInvalid(field: string): any {
     return this.customerForm.get(field)?.invalid && this.customerForm.get(field)?.touched;
   }
 
-  bookCab(carType: string, FieldsData: any, price: number) {
+  public bookCab(carType: string, FieldsData: any, price: number): void {
     const localRentalBookingDetail = {
       bookingType: "local-rental",
       carType: carType,
@@ -70,7 +70,7 @@ export class CabRentalDialogComponent implements OnInit {
     this.bookingCabDetail = localRentalBookingDetail;
   }
 
-  public submitCustomerDetails() {
+  public submitCustomerDetails(): void {
     this.customerForm.value.pickupDate = new Date(this.customerForm.value.pickupDate).toDateString();
     this.isCustomerRecordAdded = this.customerForm.value ? true : false;
 
@@ -84,5 +84,8 @@ export class CabRentalDialogComponent implements OnInit {
     });
   }
 
+  public reloadPage(): void {
+    window.location.reload()
+  }
 
 } 
