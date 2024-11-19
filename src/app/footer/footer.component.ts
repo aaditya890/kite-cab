@@ -4,11 +4,12 @@ import { LoginComponent } from '../login/login.component';
 import { MatDialog,MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [MatDialogModule],
+  imports: [MatDialogModule,MatButtonModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
