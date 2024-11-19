@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly mainAdminId = 'ec9020';
+  private readonly mainAdminId = 'ac9020x';
   private isLoggedIn = false;
 
   constructor(
