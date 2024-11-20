@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocationService } from '../location.service';
 import { MatInputModule, MatInput } from '@angular/material/input';
@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
@@ -17,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { AuthService } from '../auth.service';
+import { ConfirmCustomerRecordDeleteComponent } from '../confirm-customer-record-delete/confirm-customer-record-delete.component';
 
 
 @Component({
@@ -30,7 +31,9 @@ import { AuthService } from '../auth.service';
 export class AdminPanelComponent implements OnInit {
   priceForm: FormGroup;
   rentalForm: FormGroup;
+  filterOnwayTableFields: FormGroup;
   locationPrices: any[] = [];
+  filteredLocationPrices: any[] = []
   localRentalPackages: any[] = [];
   editingId: any;
   editingRentalId: number | null = null;
@@ -38,6 +41,7 @@ export class AdminPanelComponent implements OnInit {
   customerRecordEditForm!: FormGroup;
   customerRecords: any[] = [];
   filteredRecords = [...this.customerRecords];
+  dialog = inject(MatDialog);
   showCustomerRecordEditForm: boolean = false
   chips = [{ key: 'onway', label: 'Onway Package' }, { key: 'rental', label: 'Rental Package' }, { key: 'customer', label: 'Customer Record' }, { key: 'enquiry', label: 'Customer Enquiry' }];
   selectedChip = this.chips[3];
@@ -94,6 +98,10 @@ export class AdminPanelComponent implements OnInit {
       }),
     });
 
+    this.filterOnwayTableFields = this.fb.group({
+      filterData: ['']
+    })
+
   }
 
   ngOnInit(): void {
@@ -110,7 +118,9 @@ export class AdminPanelComponent implements OnInit {
   public loadLocationPrices(): void {
     this.locationService.getLocationPrices().subscribe({
       next: (prices) => {
-        this.locationPrices = prices;
+        this.locationPrices = prices.reverse();
+        this.filteredLocationPrices = this.locationPrices;
+        this.filterOnwayTable()
       },
       error: (error) => {
         console.error('Error loading location prices:', error);
@@ -119,10 +129,20 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  // Filter Onway Table Data Fields
+  public filterOnwayTable(): void {
+    this.filterOnwayTableFields
+      .get('filterData')
+      ?.valueChanges.subscribe((filterValue: string) => {
+        this.filteredLocationPrices = this.locationPrices.filter((location) =>
+          location.pickup.toLowerCase().includes(filterValue.toLowerCase())
+        );
+      });
+  }
+
   // To add locations and cab prices
   public addLocationPrice(): void {
     const newPrice = this.priceForm.value;
-    console.log(newPrice)
     // Check if we are in edit mode
     if (this.editingId !== null && this.editingId !== undefined) {
       this.updateLocationPrice(newPrice);  // Update location
@@ -251,7 +271,7 @@ export class AdminPanelComponent implements OnInit {
   // Load all records of rental package fields
   public loadRentalPackages(): void {
     this.locationService.getRentalPackages().subscribe({
-      next: (data) => (this.localRentalPackages = data),
+      next: (data) => (this.localRentalPackages = data.reverse()),
       error: (err) => this.snackBar.open('Error loading rental packages', 'Close', { duration: 3000 })
     });
   }
@@ -428,18 +448,29 @@ export class AdminPanelComponent implements OnInit {
 
   // Delete customer record entry
   public deleteCustomer(id: any): void {
-    this.locationService.deleteCustomerRecord(id).subscribe(() => {
-      this.customerRecords = this.customerRecords.filter(record => record.id !== id);
-      this.fetchCustomerRecords()
-      window.location.reload()
-      this.snackBar.open('Customer record deleted successfully!', 'Close', { duration: 2000 });
+    const dialogRef = this.dialog.open(ConfirmCustomerRecordDeleteComponent, {
+      width: '400px',
+      data: { id }, // Pass the customer ID as data
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // If confirmed, proceed with deletion
+        this.locationService.deleteCustomerRecord(id).subscribe(() => {
+          this.customerRecords = this.customerRecords.filter((record) => record.id !== id);
+          this.fetchCustomerRecords();
+          this.snackBar.open('Customer record deleted successfully!', 'Close', { duration: 2000 });
+        });
+      } else {
+        this.snackBar.open('Deletion cancelled', 'Close', { duration: 2000 });
+      }
     });
   }
 
   // Download the pdf
   public downloadRecord(recordId: any): void {
     const record = this.customerRecords.find(r => r.id === recordId);
-  
+
     if (record) {
       const doc = new jsPDF({
         orientation: 'portrait',
@@ -447,32 +478,32 @@ export class AdminPanelComponent implements OnInit {
         format: 'a4',
         compress: true,
       });
-  
+
       // Header Section
       doc.setFont("helvetica", "bold");
       doc.setFontSize(18);
       doc.text('KITECAB', 10, 15);
-  
+
       doc.setFont("helvetica", "light");
       doc.setFontSize(10);
       doc.text('Your Way, Our Goal', 10, 20);
-  
+
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
       doc.text('Contact: +916263676216 | Website: www.kitecab.com', 10, 25);
       doc.text('Address: Kandul Road, Sejbahar, Kamal Vihar, Raipur (C.G)', 10, 30);
-  
+
       // Invoice Title & Date
       doc.setFont("helvetica", "bold");
       doc.setFontSize(12);
       doc.text('INVOICE', 105, 40, { align: 'center' });
       doc.setFont("helvetica", "normal");
       doc.text(`Invoice Date: ${new Date().toLocaleDateString()}`, 160, 40);
-  
+
       // Separator Line
       doc.setLineWidth(0.5);
       doc.line(10, 45, 200, 45);
-  
+
       // Table-Like Layout for Details
       const details = [
         ['Full Name', record.customerDetail.fullName],
@@ -489,9 +520,9 @@ export class AdminPanelComponent implements OnInit {
         ['Approx Distance', `${record.bookingDetail.approxDistance || 'N/A'} km`],
         ['Package', record.bookingDetail.package || 'N/A'],
       ];
-  
+
       let startY = 50;
-  
+
       details.forEach(([label, value]) => {
         doc.setFont("helvetica", "bold");
         doc.text(`${label}:`, 10, startY);
@@ -499,7 +530,7 @@ export class AdminPanelComponent implements OnInit {
         doc.text(value, 60, startY);
         startY += 7;
       });
-  
+
       // Highlight Total Price with Underline
       startY += 5;
       doc.setFont("helvetica", "bold");
@@ -507,26 +538,26 @@ export class AdminPanelComponent implements OnInit {
       doc.text(`Total Price: ${record.bookingDetail.price} Rupee`, 10, startY);
       doc.setLineWidth(0.5);
       doc.line(10, startY + 1, 80, startY + 1); // Underline for price
-  
+
       // Footer Section - Compact
       startY += 10;
       doc.setLineWidth(0.5);
       doc.line(10, startY, 200, startY); // Footer Separator Line
       startY += 5;
-  
+
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
       doc.text('Thank you for choosing KiteCab!', 105, startY, { align: 'center' });
       startY += 5;
       doc.text('For inquiries, visit our website or contact support@kitecab.com.', 105, startY, { align: 'center' });
-  
+
       // Save the PDF
       doc.save(`${record.customerDetail.fullName}-KiteCab-Receipt.pdf`);
     } else {
       console.error('Record not found for downloading');
     }
   }
-    
+
   //---------------------------------- Customer Enquiry Filed ---------------------------------------------------   
 
   // Load all customer enquiry data 

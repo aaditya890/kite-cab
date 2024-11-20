@@ -318,7 +318,7 @@ export class SupabaseService {
     const updatedValue = currentValue.filter((record: any) => record.id !== id);
 
     // Log updated value to ensure the item has been removed
-    console.log('Updated customerRecords after deletion:', updatedValue);
+    // console.log('Updated customerRecords after deletion:', updatedValue);
 
     // Check if the item was actually removed
     if (updatedValue.length === currentValue.length) {
