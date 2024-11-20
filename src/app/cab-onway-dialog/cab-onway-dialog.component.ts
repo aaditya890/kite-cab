@@ -62,7 +62,7 @@ export class CabOnwayDialogComponent implements OnInit {
 
   public bookCab(vehicalType: string, price: number, distance: number): any {
     const cabOnwayBookingDetails = {
-      bookingType: "onway",
+      bookingType: "oneway",
       carType: vehicalType,
       pickupLocation: this.data.pickupLocation,
       dropLocation: this.data.dropLocation,

@@ -20,7 +20,14 @@
   <!-- Form Sections -->
   @if (selectedChip.key === 'onway') {
   <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full mt-3 space-y-6">
-    <h2 class="text-xl font-bold mb-4 text-center">Add Location Price (One-Way)</h2>
+    <h2 class="text-xl font-bold mb-4 text-center">Filter One-Way Data</h2>
+    <form [formGroup]="filterOnwayTableFields">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Filter Table Data</mat-label>
+        <input type="text" matInput formControlName="filterData">
+      </mat-form-field>
+    </form>
+    <h2 class="text-xl font-bold mb-4 text-center">Add One-Way Fields</h2>
     <form [formGroup]="priceForm" (ngSubmit)="addLocationPrice()">
       <div class="md:flex gap-2">
         <mat-form-field appearance="fill" class="w-full mb-4">
@@ -102,9 +109,9 @@
 
 <!-- Table Section -->
 @if (selectedChip.key === 'onway'){
-<div class="my-4 overflow-scroll">
+<div class="my-4 overflow-scroll overflow-y-scroll h-64">
   <h2 class="text-lg font-semibold text-center">Onway Location Prices</h2>
-  <table mat-table [dataSource]="locationPrices" class="w-full mt-2 border rounded-lg">
+  <table mat-table [dataSource]="filteredLocationPrices" class="w-full mt-2 border rounded-lg">
     @for (column of displayedColumns; track $index) {
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef class="py-2 px-4 font-semibold text-gray-700"> {{ column }} </th>
@@ -368,9 +375,8 @@
 }
 
 @if (selectedChip.key === 'enquiry') {
-  <div class="overflow-scroll">
+  <div class="overflow-scroll overflow-y-scroll h-64">
     <table mat-table [dataSource]="enquiryDataSource" class="mat-elevation-z8">
-
       <!-- Pickup Location Column -->
       <ng-container matColumnDef="pickupLocation">
         <th mat-header-cell *matHeaderCellDef> Pickup Location </th>
