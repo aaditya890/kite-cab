@@ -235,19 +235,25 @@
           <span class="font-semibold">Price:</span> {{ record.bookingDetail?.price }}
 
           <!-- Conditional fields based on booking type -->
-          <ng-container *ngIf="record.bookingDetail?.bookingType === 'onway'">
-            <br> <span class="font-semibold">Drop Location:</span> {{ record.bookingDetail?.dropLocation }}
-            <br> <span class="font-semibold">Distance:</span> {{ record.bookingDetail?.distance }} km
-          </ng-container>
-          <ng-container *ngIf="record.bookingDetail?.bookingType === 'round-trip'">
+           @if (record.bookingDetail?.bookingType === 'oneway') {
+            <ng-container>
+              <br> <span class="font-semibold">Drop Location:</span> {{ record.bookingDetail?.dropLocation }}
+              <br> <span class="font-semibold">Distance:</span> {{ record.bookingDetail?.distance }} km
+            </ng-container>
+           }
+         @if (record.bookingDetail?.bookingType === 'round-trip') {
+          <ng-container>
             <br> <span class="font-semibold">Drop Location:</span> {{ record.bookingDetail?.dropLocation }}
             <br> <span class="font-semibold">Distance:</span> {{ record.bookingDetail?.distance }} km
             <br> <span class="font-semibold">Waiting Time:</span> {{ record.bookingDetail?.waitingTime }}
             <br> <span class="font-semibold">Approx Distance:</span> {{ record.bookingDetail?.approxDistance }} km
           </ng-container>
-          <ng-container *ngIf="record.bookingDetail?.bookingType === 'local-rental'">
-            <br> <span class="font-semibold">Package:</span> {{ record.bookingDetail?.package }}
-          </ng-container>
+         }
+          @if (record.bookingDetail?.bookingType === 'local-rental') {
+            <ng-container>
+              <br> <span class="font-semibold">Package:</span> {{ record.bookingDetail?.package }}
+            </ng-container>
+          }  
         </td>
       </ng-container>
 
