@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, afterNextRender } from '@angular/core';
-import { RouterOutlet, RouterLink, Router } from '@angular/router';
+import { RouterOutlet, Router, } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
-import { HomeComponent } from './home/home.component';
 import { FooterComponent } from "./footer/footer.component";
 import { SupabaseService } from './supabase.service';
 import { Meta, Title } from '@angular/platform-browser';
@@ -9,7 +8,7 @@ import { Meta, Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavComponent, HomeComponent, RouterLink,RouterOutlet,FooterComponent],
+  imports: [RouterOutlet, NavComponent,RouterOutlet,FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -17,9 +16,10 @@ export class AppComponent implements OnInit{
   constructor(
     private supabase: SupabaseService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
+    private router: Router
   ) {
-    afterNextRender(() => {
+   afterNextRender(() => {
       this.supabase.initialize();
     })
     this.title.setTitle('KiteCab - Cab Service Fast & Reliable');
@@ -33,6 +33,7 @@ export class AppComponent implements OnInit{
     ]);
   }
   ngOnInit(): void {
+    console.log("Hello From KiteCab.!")
     // Set page title
     this.title.setTitle('KiteCab - Cab Service Fast & Reliable');
 
@@ -47,4 +48,8 @@ export class AppComponent implements OnInit{
     this.meta.updateTag({ property: 'og:url', content: 'https://kitecab.com' });
   }
   }
+
+function gtag(arg0: string, arg1: string, arg2: { page_path: string; }) {
+  throw new Error('Function not implemented.');
+}
 

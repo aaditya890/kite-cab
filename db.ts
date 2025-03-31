@@ -100,3 +100,2286 @@ export class db {
         }
     ]
 } 
+
+let newlocationPrices =[
+    {
+      "id": 20698,
+      "price": 1100,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Bhilai",
+      "distance": 50,
+      "suvPrice": 1900,
+      "sedanPrice": 1200
+    },
+    {
+      "id": 396719,
+      "price": 1100,
+      "active": true,
+      "pickup": "Bhilai",
+      "dropoff": "Raipur Airport",
+      "distance": 50,
+      "suvPrice": 1900,
+      "sedanPrice": 1200
+    },
+    {
+      "id": 37833,
+      "price": 1100,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Bhilai",
+      "distance": 43,
+      "suvPrice": 1900,
+      "sedanPrice": 1200
+    },
+    {
+      "id": 516346,
+      "price": 1100,
+      "active": true,
+      "pickup": "Bhilai",
+      "dropoff": "Raipur",
+      "distance": 43,
+      "suvPrice": 1900,
+      "sedanPrice": 1200
+    },
+    {
+      "id": 87751,
+      "price": 1150,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Durg",
+      "distance": 55,
+      "suvPrice": 1950,
+      "sedanPrice": 1250
+    },
+    {
+      "id": 704898,
+      "price": 1150,
+      "active": true,
+      "pickup": "Durg",
+      "dropoff": "Raipur Airport",
+      "distance": 55,
+      "suvPrice": 1950,
+      "sedanPrice": 1250
+    },
+    {
+      "id": 271050,
+      "price": 1300,
+      "active": true,
+      "pickup": "Naya Raipur",
+      "dropoff": "Bhilai",
+      "distance": 60,
+      "suvPrice": 2200,
+      "sedanPrice": 1400
+    },
+    {
+      "id": 724738,
+      "price": 1300,
+      "active": true,
+      "pickup": "Bhilai",
+      "dropoff": "Naya Raipur",
+      "distance": 60,
+      "suvPrice": 2200,
+      "sedanPrice": 1400
+    },
+    {
+      "id": 502887,
+      "price": 1100,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Durg",
+      "distance": 45,
+      "suvPrice": 1950,
+      "sedanPrice": 1200
+    },
+    {
+      "id": 347939,
+      "price": 1100,
+      "active": true,
+      "pickup": "Durg",
+      "dropoff": "Raipur",
+      "distance": 45,
+      "suvPrice": 1950,
+      "sedanPrice": 1200
+    },
+    {
+      "id": 763368,
+      "price": 1400,
+      "active": true,
+      "pickup": "Naya Raipur",
+      "dropoff": "Durg",
+      "distance": 65,
+      "suvPrice": 2200,
+      "sedanPrice": 1500
+    },
+    {
+      "id": 117686,
+      "price": 1400,
+      "active": true,
+      "pickup": "Durg",
+      "dropoff": "Naya Raipur",
+      "distance": 65,
+      "suvPrice": 2200,
+      "sedanPrice": 1500
+    },
+    {
+      "id": 278298,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Bilaspur",
+      "distance": 125,
+      "suvPrice": 2700,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 147736,
+      "price": 1900,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Raipur Airport",
+      "distance": 125,
+      "suvPrice": 2700,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 523591,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Bilaspur",
+      "distance": 125,
+      "suvPrice": 2700,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 562028,
+      "price": 1900,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Raipur",
+      "distance": 125,
+      "suvPrice": 2700,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 968781,
+      "price": 2000,
+      "active": true,
+      "pickup": "Naya Raipur",
+      "dropoff": "Bilaspur",
+      "distance": 150,
+      "suvPrice": 2900,
+      "sedanPrice": 2200
+    },
+    {
+      "id": 580801,
+      "price": 2000,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Naya Raipur",
+      "distance": 150,
+      "suvPrice": 2900,
+      "sedanPrice": 2200
+    },
+    {
+      "id": 782004,
+      "price": 3300,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Korba",
+      "distance": 235,
+      "suvPrice": 4600,
+      "sedanPrice": 3500
+    },
+    {
+      "id": 67932,
+      "price": 3300,
+      "active": true,
+      "pickup": "Korba",
+      "dropoff": "Raipur Airport",
+      "distance": 235,
+      "suvPrice": 4600,
+      "sedanPrice": 3500
+    },
+    {
+      "id": 837593,
+      "price": 3300,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Korba",
+      "distance": 235,
+      "suvPrice": 4600,
+      "sedanPrice": 3500
+    },
+    {
+      "id": 580831,
+      "price": 3300,
+      "active": true,
+      "pickup": "Korba",
+      "dropoff": "Raipur",
+      "distance": 235,
+      "suvPrice": 4600,
+      "sedanPrice": 3500
+    },
+    {
+      "id": 76748,
+      "price": 3500,
+      "active": true,
+      "pickup": "Naya Raipur",
+      "dropoff": "Korba",
+      "distance": 255,
+      "suvPrice": 4800,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 162857,
+      "price": 3500,
+      "active": true,
+      "pickup": "Korba",
+      "dropoff": "Naya Raipur",
+      "distance": 255,
+      "suvPrice": 4800,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 235398,
+      "price": 3800,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Raigarh",
+      "distance": 245,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 943369,
+      "price": 3800,
+      "active": true,
+      "pickup": "Raigarh",
+      "dropoff": "Raipur Airport",
+      "distance": 245,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 55238,
+      "price": 3800,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Raigarh",
+      "distance": 252,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 881503,
+      "price": 3800,
+      "active": true,
+      "pickup": "Raigarh",
+      "dropoff": "Raipur",
+      "distance": 252,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 734455,
+      "price": 3900,
+      "active": true,
+      "pickup": "Naya Raipur",
+      "dropoff": "Raigarh",
+      "distance": 245,
+      "suvPrice": 5000,
+      "sedanPrice": 4000
+    },
+    {
+      "id": 738473,
+      "price": 3900,
+      "active": true,
+      "pickup": "Raigarh",
+      "dropoff": "Naya Raipur",
+      "distance": 245,
+      "suvPrice": 5000,
+      "sedanPrice": 4000
+    },
+    {
+      "id": 739303,
+      "price": 700,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Raipur",
+      "distance": 25,
+      "suvPrice": 1300,
+      "sedanPrice": 800
+    },
+    {
+      "id": 124227,
+      "price": 700,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Raipur Airport",
+      "distance": 25,
+      "suvPrice": 1300,
+      "sedanPrice": 800
+    },
+    {
+      "id": 339144,
+      "price": 900,
+      "active": true,
+      "pickup": "Naya Raipur",
+      "dropoff": "Raipur",
+      "distance": 30,
+      "suvPrice": 1600,
+      "sedanPrice": 1000
+    },
+    {
+      "id": 841539,
+      "price": 900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Naya Raipur",
+      "distance": 30,
+      "suvPrice": 1600,
+      "sedanPrice": 1000
+    },
+    {
+      "id": 652764,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Rajnandgaon",
+      "distance": 92,
+      "suvPrice": 3100,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 154595,
+      "price": 1900,
+      "active": true,
+      "pickup": "Rajnandgaon",
+      "dropoff": "Raipur Airport",
+      "distance": 92,
+      "suvPrice": 3100,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 660604,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Rajnandgaon",
+      "distance": 80,
+      "suvPrice": 3100,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 98248,
+      "price": 1900,
+      "active": true,
+      "pickup": "Rajnandgaon",
+      "dropoff": "Raipur",
+      "distance": 80,
+      "suvPrice": 3100,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 13797,
+      "price": 5000,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Nagpur (MH)",
+      "distance": 300,
+      "suvPrice": 6900,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 367074,
+      "price": 5000,
+      "active": true,
+      "pickup": "Nagpur (MH)",
+      "dropoff": "Raipur",
+      "distance": 300,
+      "suvPrice": 6900,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 632581,
+      "price": 4500,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Jagdalpur",
+      "distance": 305,
+      "suvPrice": 6100,
+      "sedanPrice": 4700
+    },
+    {
+      "id": 566996,
+      "price": 4500,
+      "active": true,
+      "pickup": "Jagdalpur",
+      "dropoff": "Raipur",
+      "distance": 305,
+      "suvPrice": 6100,
+      "sedanPrice": 4700
+    },
+    {
+      "id": 109056,
+      "price": 4500,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Jagdalpur",
+      "distance": 298,
+      "suvPrice": 6100,
+      "sedanPrice": 4700
+    },
+    {
+      "id": 350684,
+      "price": 4500,
+      "active": true,
+      "pickup": "Jagdalpur",
+      "dropoff": "Raipur Airport",
+      "distance": 298,
+      "suvPrice": 6100,
+      "sedanPrice": 4700
+    },
+    {
+      "id": 151410,
+      "price": 3800,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Kondagaon",
+      "distance": 235,
+      "suvPrice": 5600,
+      "sedanPrice": 4000
+    },
+    {
+      "id": 691521,
+      "price": 3800,
+      "active": true,
+      "pickup": "Kondagaon",
+      "dropoff": "Raipur",
+      "distance": 235,
+      "suvPrice": 5600,
+      "sedanPrice": 4000
+    },
+    {
+      "id": 61442,
+      "price": 3800,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Kondagaon",
+      "distance": 225,
+      "suvPrice": 5600,
+      "sedanPrice": 4000
+    },
+    {
+      "id": 58391,
+      "price": 3800,
+      "active": true,
+      "pickup": "Kondagaon",
+      "dropoff": "Raipur Airport",
+      "distance": 225,
+      "suvPrice": 5600,
+      "sedanPrice": 4000
+    },
+    {
+      "id": 270153,
+      "price": 2700,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Kanker",
+      "distance": 145,
+      "suvPrice": 3800,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 434761,
+      "price": 2700,
+      "active": true,
+      "pickup": "Kanker",
+      "dropoff": "Raipur",
+      "distance": 145,
+      "suvPrice": 3800,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 901211,
+      "price": 2700,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Kanker",
+      "distance": 135,
+      "suvPrice": 3600,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 155746,
+      "price": 2700,
+      "active": true,
+      "pickup": "Kanker",
+      "dropoff": "Raipur Airport",
+      "distance": 135,
+      "suvPrice": 3600,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 652221,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Dhamtari",
+      "distance": 75,
+      "suvPrice": 3000,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 13592,
+      "price": 1900,
+      "active": true,
+      "pickup": "Dhamtari",
+      "dropoff": "Raipur Airport",
+      "distance": 75,
+      "suvPrice": 3000,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 844185,
+      "price": 2000,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Dhamtari",
+      "distance": 83,
+      "suvPrice": 3100,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 424055,
+      "price": 2000,
+      "active": true,
+      "pickup": "Dhamtari",
+      "dropoff": "Raipur",
+      "distance": 83,
+      "suvPrice": 3100,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 493151,
+      "price": 5400,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Ambikapur",
+      "distance": 343,
+      "suvPrice": 8100,
+      "sedanPrice": 5600
+    },
+    {
+      "id": 191265,
+      "price": 5400,
+      "active": true,
+      "pickup": "Ambikapur",
+      "dropoff": "Raipur",
+      "distance": 343,
+      "suvPrice": 8100,
+      "sedanPrice": 5600
+    },
+    {
+      "id": 58600,
+      "price": 5500,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Ambikapur",
+      "distance": 358,
+      "suvPrice": 8300,
+      "sedanPrice": 5700
+    },
+    {
+      "id": 686376,
+      "price": 5500,
+      "active": true,
+      "pickup": "Ambikapur",
+      "dropoff": "Raipur Airport",
+      "distance": 358,
+      "suvPrice": 8300,
+      "sedanPrice": 5700
+    },
+    {
+      "id": 733460,
+      "price": 3400,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Katghora",
+      "distance": 200,
+      "suvPrice": 4900,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 927333,
+      "price": 3400,
+      "active": true,
+      "pickup": "Katghora",
+      "dropoff": "Raipur",
+      "distance": 200,
+      "suvPrice": 4900,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 570388,
+      "price": 3500,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Katghora",
+      "distance": 218,
+      "suvPrice": 4900,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 435582,
+      "price": 3500,
+      "active": true,
+      "pickup": "Katghora",
+      "dropoff": "Raipur Airport",
+      "distance": 218,
+      "suvPrice": 4900,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 930688,
+      "price": 6400,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Jharsuguda (OD)",
+      "distance": 329,
+      "suvPrice": 8500,
+      "sedanPrice": 6600
+    },
+    {
+      "id": 957580,
+      "price": 6400,
+      "active": true,
+      "pickup": "Jharsuguda (OD)",
+      "dropoff": "Raipur",
+      "distance": 329,
+      "suvPrice": 8500,
+      "sedanPrice": 6600
+    },
+    {
+      "id": 370698,
+      "price": 6400,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Jharsuguda (OD)",
+      "distance": 320,
+      "suvPrice": 8400,
+      "sedanPrice": 6600
+    },
+    {
+      "id": 847907,
+      "price": 6400,
+      "active": true,
+      "pickup": "Jharsuguda (OD)",
+      "dropoff": "Raipur Airport",
+      "distance": 320,
+      "suvPrice": 8400,
+      "sedanPrice": 6600
+    },
+    {
+      "id": 380667,
+      "price": 5200,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Sambalpur (OD)",
+      "distance": 268,
+      "suvPrice": 6500,
+      "sedanPrice": 5400
+    },
+    {
+      "id": 546668,
+      "price": 5200,
+      "active": true,
+      "pickup": "Sambalpur (OD)",
+      "dropoff": "Raipur Airport",
+      "distance": 268,
+      "suvPrice": 6500,
+      "sedanPrice": 5400
+    },
+    {
+      "id": 157054,
+      "price": 5200,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Sambalpur (OD)",
+      "distance": 278,
+      "suvPrice": 6600,
+      "sedanPrice": 5400
+    },
+    {
+      "id": 813074,
+      "price": 5200,
+      "active": true,
+      "pickup": "Sambalpur (OD)",
+      "dropoff": "Raipur",
+      "distance": 278,
+      "suvPrice": 6600,
+      "sedanPrice": 5400
+    },
+    {
+      "id": 567350,
+      "price": 4600,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Bargarh (OD)",
+      "distance": 232,
+      "suvPrice": 5900,
+      "sedanPrice": 4800
+    },
+    {
+      "id": 977897,
+      "price": 4600,
+      "active": true,
+      "pickup": "Bargarh (OD)",
+      "dropoff": "Raipur",
+      "distance": 232,
+      "suvPrice": 5900,
+      "sedanPrice": 4800
+    },
+    {
+      "id": 916827,
+      "price": 4600,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Bargarh (OD)",
+      "distance": 225,
+      "suvPrice": 5900,
+      "sedanPrice": 4800
+    },
+    {
+      "id": 966221,
+      "price": 4600,
+      "active": true,
+      "pickup": "Bargarh (OD)",
+      "dropoff": "Raipur Airport",
+      "distance": 225,
+      "suvPrice": 5900,
+      "sedanPrice": 4800
+    },
+    {
+      "id": 280444,
+      "price": 2800,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Basna",
+      "distance": 133,
+      "suvPrice": 3700,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 523620,
+      "price": 2800,
+      "active": true,
+      "pickup": "Basna",
+      "dropoff": "Raipur Airport",
+      "distance": 133,
+      "suvPrice": 3700,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 790994,
+      "price": 2900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Basna",
+      "distance": 142,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 712629,
+      "price": 2900,
+      "active": true,
+      "pickup": "Basna",
+      "dropoff": "Raipur",
+      "distance": 142,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 347862,
+      "price": 3500,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Saraipali",
+      "distance": 165,
+      "suvPrice": 4900,
+      "sedanPrice": 3700
+    },
+    {
+      "id": 548800,
+      "price": 3500,
+      "active": true,
+      "pickup": "Saraipali",
+      "dropoff": "Raipur",
+      "distance": 165,
+      "suvPrice": 4900,
+      "sedanPrice": 3700
+    },
+    {
+      "id": 378729,
+      "price": 3500,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Saraipali",
+      "distance": 158,
+      "suvPrice": 4900,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 611305,
+      "price": 3500,
+      "active": true,
+      "pickup": "Saraipali",
+      "dropoff": "Raipur Airport",
+      "distance": 158,
+      "suvPrice": 4900,
+      "sedanPrice": 3600
+    },
+    {
+      "id": 520817,
+      "price": 1600,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Mahasamund",
+      "distance": 50,
+      "suvPrice": 2400,
+      "sedanPrice": 1800
+    },
+    {
+      "id": 767676,
+      "price": 1600,
+      "active": true,
+      "pickup": "Mahasamund",
+      "dropoff": "Raipur Airport",
+      "distance": 50,
+      "suvPrice": 2400,
+      "sedanPrice": 1800
+    },
+    {
+      "id": 960276,
+      "price": 1600,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Mahasamund",
+      "distance": 60,
+      "suvPrice": 2500,
+      "sedanPrice": 1800
+    },
+    {
+      "id": 638257,
+      "price": 1600,
+      "active": true,
+      "pickup": "Mahasamund",
+      "dropoff": "Raipur",
+      "distance": 60,
+      "suvPrice": 2500,
+      "sedanPrice": 1800
+    },
+    {
+      "id": 334644,
+      "price": 2600,
+      "active": true,
+      "pickup": "Bhilai",
+      "dropoff": "Bilaspur",
+      "distance": 149,
+      "suvPrice": 3500,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 194900,
+      "price": 2600,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Bhilai",
+      "distance": 149,
+      "suvPrice": 3500,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 96612,
+      "price": 2700,
+      "active": true,
+      "pickup": "Durg",
+      "dropoff": "Bilaspur",
+      "distance": 156,
+      "suvPrice": 3700,
+      "sedanPrice": 2800
+    },
+    {
+      "id": 19463,
+      "price": 2700,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Durg",
+      "distance": 156,
+      "suvPrice": 3700,
+      "sedanPrice": 2800
+    },
+    {
+      "id": 342707,
+      "price": 2100,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Mungeli",
+      "distance": 110,
+      "suvPrice": 3100,
+      "sedanPrice": 2200
+    },
+    {
+      "id": 296806,
+      "price": 2100,
+      "active": true,
+      "pickup": "Mungeli",
+      "dropoff": "Raipur",
+      "distance": 110,
+      "suvPrice": 3100,
+      "sedanPrice": 2200
+    },
+    {
+      "id": 34826,
+      "price": 2100,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Mungeli",
+      "distance": 120,
+      "suvPrice": 3200,
+      "sedanPrice": 2200
+    },
+    {
+      "id": 547750,
+      "price": 2100,
+      "active": true,
+      "pickup": "Mungeli",
+      "dropoff": "Raipur Airport",
+      "distance": 120,
+      "suvPrice": 3200,
+      "sedanPrice": 2200
+    },
+    {
+      "id": 74476,
+      "price": 2800,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Ratanpur",
+      "distance": 165,
+      "suvPrice": 3800,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 300273,
+      "price": 2800,
+      "active": true,
+      "pickup": "Ratanpur",
+      "dropoff": "Raipur Airport",
+      "distance": 165,
+      "suvPrice": 3800,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 844650,
+      "price": 2900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Ratanpur",
+      "distance": 148,
+      "suvPrice": 4000,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 208894,
+      "price": 2900,
+      "active": true,
+      "pickup": "Ratanpur",
+      "dropoff": "Raipur",
+      "distance": 148,
+      "suvPrice": 4000,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 344945,
+      "price": 2500,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Kawardha",
+      "distance": 124,
+      "suvPrice": 3600,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 531843,
+      "price": 2500,
+      "active": true,
+      "pickup": "Kawardha",
+      "dropoff": "Raipur",
+      "distance": 124,
+      "suvPrice": 3600,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 818749,
+      "price": 2600,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Kawardha",
+      "distance": 138,
+      "suvPrice": 3800,
+      "sedanPrice": 2800
+    },
+    {
+      "id": 66829,
+      "price": 2600,
+      "active": true,
+      "pickup": "Kawardha",
+      "dropoff": "Raipur Airport",
+      "distance": 138,
+      "suvPrice": 3800,
+      "sedanPrice": 2800
+    },
+    {
+      "id": 509810,
+      "price": 2000,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Bemetara",
+      "distance": 90,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 725766,
+      "price": 2000,
+      "active": true,
+      "pickup": "Bemetara",
+      "dropoff": "Raipur Airport",
+      "distance": 90,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 478574,
+      "price": 2000,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Bemetara",
+      "distance": 74,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 246914,
+      "price": 2000,
+      "active": true,
+      "pickup": "Bemetara",
+      "dropoff": "Raipur",
+      "distance": 74,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 241413,
+      "price": 2500,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Dongargarh",
+      "distance": 114,
+      "suvPrice": 3500,
+      "sedanPrice": 2600
+    },
+    {
+      "id": 421451,
+      "price": 2500,
+      "active": true,
+      "pickup": "Dongargarh",
+      "dropoff": "Raipur",
+      "distance": 114,
+      "suvPrice": 3500,
+      "sedanPrice": 2600
+    },
+    {
+      "id": 926554,
+      "price": 2700,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Dongargarh",
+      "distance": 130,
+      "suvPrice": 3800,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 110075,
+      "price": 2700,
+      "active": true,
+      "pickup": "Dongargarh",
+      "dropoff": "Raipur Airport",
+      "distance": 130,
+      "suvPrice": 3800,
+      "sedanPrice": 2900
+    },
+    {
+      "id": 352718,
+      "price": 4500,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Gondia (MH)",
+      "distance": 208,
+      "suvPrice": 5800,
+      "sedanPrice": 4700
+    },
+    {
+      "id": 239481,
+      "price": 4500,
+      "active": true,
+      "pickup": "Gondia (MH)",
+      "dropoff": "Raipur",
+      "distance": 208,
+      "suvPrice": 5800,
+      "sedanPrice": 4700
+    },
+    {
+      "id": 660752,
+      "price": 2000,
+      "active": true,
+      "pickup": "Raigarh",
+      "dropoff": "Jharsuguda (OD)",
+      "distance": 90,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 309831,
+      "price": 2000,
+      "active": true,
+      "pickup": "Jharsuguda (OD)",
+      "dropoff": "Raigarh",
+      "distance": 90,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 18477,
+      "price": 2500,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Raigarh",
+      "distance": 152,
+      "suvPrice": 3500,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 870967,
+      "price": 2500,
+      "active": true,
+      "pickup": "Raigarh",
+      "dropoff": "Bilaspur",
+      "distance": 152,
+      "suvPrice": 3500,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 443805,
+      "price": 7300,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Jabalpur (MP)",
+      "distance": 360,
+      "suvPrice": 11000,
+      "sedanPrice": 7500
+    },
+    {
+      "id": 311993,
+      "price": 7300,
+      "active": true,
+      "pickup": "Jabalpur (MP)",
+      "dropoff": "Raipur",
+      "distance": 360,
+      "suvPrice": 11000,
+      "sedanPrice": 7500
+    },
+    {
+      "id": 297343,
+      "price": 8300,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Katni (MP)",
+      "distance": 430,
+      "suvPrice": 11800,
+      "sedanPrice": 8500
+    },
+    {
+      "id": 155146,
+      "price": 8300,
+      "active": true,
+      "pickup": "Katni (MP)",
+      "dropoff": "Raipur",
+      "distance": 430,
+      "suvPrice": 11800,
+      "sedanPrice": 8500
+    },
+    {
+      "id": 43234,
+      "price": 7200,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Umaria (MP)",
+      "distance": 362,
+      "suvPrice": 10500,
+      "sedanPrice": 7400
+    },
+    {
+      "id": 126341,
+      "price": 7200,
+      "active": true,
+      "pickup": "Umaria (MP)",
+      "dropoff": "Raipur",
+      "distance": 362,
+      "suvPrice": 10500,
+      "sedanPrice": 7400
+    },
+    {
+      "id": 274270,
+      "price": 6500,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Shahdol (MP)",
+      "distance": 294,
+      "suvPrice": 9200,
+      "sedanPrice": 6700
+    },
+    {
+      "id": 724387,
+      "price": 6500,
+      "active": true,
+      "pickup": "Shahdol (MP)",
+      "dropoff": "Raipur",
+      "distance": 294,
+      "suvPrice": 9200,
+      "sedanPrice": 6700
+    },
+    {
+      "id": 777171,
+      "price": 6000,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Anuppur (MP)",
+      "distance": 283,
+      "suvPrice": 9400,
+      "sedanPrice": 6300
+    },
+    {
+      "id": 948074,
+      "price": 6000,
+      "active": true,
+      "pickup": "Anuppur (MP)",
+      "dropoff": "Raipur",
+      "distance": 283,
+      "suvPrice": 9400,
+      "sedanPrice": 6300
+    },
+    {
+      "id": 166088,
+      "price": 3200,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Champa",
+      "distance": 180,
+      "suvPrice": 4500,
+      "sedanPrice": 3400
+    },
+    {
+      "id": 907788,
+      "price": 3200,
+      "active": true,
+      "pickup": "Champa",
+      "dropoff": "Raipur",
+      "distance": 180,
+      "suvPrice": 4500,
+      "sedanPrice": 3400
+    },
+    {
+      "id": 864651,
+      "price": 3200,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Champa",
+      "distance": 195,
+      "suvPrice": 4500,
+      "sedanPrice": 3400
+    },
+    {
+      "id": 565293,
+      "price": 3200,
+      "active": true,
+      "pickup": "Champa",
+      "dropoff": "Raipur Airport",
+      "distance": 195,
+      "suvPrice": 4500,
+      "sedanPrice": 3400
+    },
+    {
+      "id": 417749,
+      "price": 3100,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Janjgir Naila",
+      "distance": 185,
+      "suvPrice": 4400,
+      "sedanPrice": 3300
+    },
+    {
+      "id": 191008,
+      "price": 3100,
+      "active": true,
+      "pickup": "Janjgir Naila",
+      "dropoff": "Raipur Airport",
+      "distance": 185,
+      "suvPrice": 4400,
+      "sedanPrice": 3300
+    },
+    {
+      "id": 473362,
+      "price": 3100,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Janjgir Naila",
+      "distance": 170,
+      "suvPrice": 4400,
+      "sedanPrice": 3300
+    },
+    {
+      "id": 598332,
+      "price": 3100,
+      "active": true,
+      "pickup": "Janjgir Naila",
+      "dropoff": "Raipur",
+      "distance": 170,
+      "suvPrice": 4400,
+      "sedanPrice": 3300
+    },
+    {
+      "id": 478406,
+      "price": 3500,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Baradwar",
+      "distance": 195,
+      "suvPrice": 4700,
+      "sedanPrice": 3700
+    },
+    {
+      "id": 754639,
+      "price": 3500,
+      "active": true,
+      "pickup": "Baradwar",
+      "dropoff": "Raipur",
+      "distance": 195,
+      "suvPrice": 4700,
+      "sedanPrice": 3700
+    },
+    {
+      "id": 826966,
+      "price": 3600,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Baradwar",
+      "distance": 190,
+      "suvPrice": 4700,
+      "sedanPrice": 3800
+    },
+    {
+      "id": 26901,
+      "price": 3600,
+      "active": true,
+      "pickup": "Baradwar",
+      "dropoff": "Raipur Airport",
+      "distance": 190,
+      "suvPrice": 4700,
+      "sedanPrice": 3800
+    },
+    {
+      "id": 728517,
+      "price": 3600,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Sakti",
+      "distance": 210,
+      "suvPrice": 4800,
+      "sedanPrice": 3800
+    },
+    {
+      "id": 473205,
+      "price": 3600,
+      "active": true,
+      "pickup": "Sakti",
+      "dropoff": "Raipur Airport",
+      "distance": 210,
+      "suvPrice": 4800,
+      "sedanPrice": 3800
+    },
+    {
+      "id": 389446,
+      "price": 3600,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Sakti",
+      "distance": 195,
+      "suvPrice": 4800,
+      "sedanPrice": 3800
+    },
+    {
+      "id": 279072,
+      "price": 3600,
+      "active": true,
+      "pickup": "Sakti",
+      "dropoff": "Raipur",
+      "distance": 195,
+      "suvPrice": 4800,
+      "sedanPrice": 3800
+    },
+    {
+      "id": 368821,
+      "price": 3700,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Kharsia",
+      "distance": 218,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 585580,
+      "price": 3700,
+      "active": true,
+      "pickup": "Kharsia",
+      "dropoff": "Raipur",
+      "distance": 218,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 841894,
+      "price": 3700,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Kharsia",
+      "distance": 225,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 955925,
+      "price": 3700,
+      "active": true,
+      "pickup": "Kharsia",
+      "dropoff": "Raipur Airport",
+      "distance": 225,
+      "suvPrice": 4900,
+      "sedanPrice": 3900
+    },
+    {
+      "id": 183495,
+      "price": 2800,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Akaltara",
+      "distance": 155,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 750056,
+      "price": 2800,
+      "active": true,
+      "pickup": "Akaltara",
+      "dropoff": "Raipur Airport",
+      "distance": 155,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 354930,
+      "price": 2800,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Akaltara",
+      "distance": 148,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 281859,
+      "price": 2800,
+      "active": true,
+      "pickup": "Akaltara",
+      "dropoff": "Raipur",
+      "distance": 148,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 905771,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Baloda Bazar",
+      "distance": 89,
+      "suvPrice": 2800,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 896801,
+      "price": 1900,
+      "active": true,
+      "pickup": "Baloda Bazar",
+      "dropoff": "Raipur",
+      "distance": 89,
+      "suvPrice": 2800,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 375942,
+      "price": 2000,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Baloda Bazar",
+      "distance": 198,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 619082,
+      "price": 2000,
+      "active": true,
+      "pickup": "Baloda Bazar",
+      "dropoff": "Raipur Airport",
+      "distance": 198,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 272618,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Bhatapara",
+      "distance": 99,
+      "suvPrice": 2800,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 989369,
+      "price": 1900,
+      "active": true,
+      "pickup": "Bhatapara",
+      "dropoff": "Raipur Airport",
+      "distance": 99,
+      "suvPrice": 2800,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 333408,
+      "price": 1800,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Bhatapara",
+      "distance": 85,
+      "suvPrice": 2800,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 599133,
+      "price": 1800,
+      "active": true,
+      "pickup": "Bhatapara",
+      "dropoff": "Raipur",
+      "distance": 85,
+      "suvPrice": 2800,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 271219,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Shree Cement Khapradih",
+      "distance": 75,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 877656,
+      "price": 1900,
+      "active": true,
+      "pickup": "Shree Cement Khapradih",
+      "dropoff": "Raipur",
+      "distance": 75,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 534090,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Shree Cement Khapradih ",
+      "distance": 90,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 910895,
+      "price": 1900,
+      "active": true,
+      "pickup": "Shree Cement Khapradih ",
+      "dropoff": "Raipur Airport",
+      "distance": 90,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 684243,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Hirmi Ultratech Cement",
+      "distance": 65,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 103422,
+      "price": 1900,
+      "active": true,
+      "pickup": "Hirmi Ultratech Cement",
+      "dropoff": "Raipur",
+      "distance": 65,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 717356,
+      "price": 1900,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Hirmi Ultratech Cement",
+      "distance": 70,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 509176,
+      "price": 1900,
+      "active": true,
+      "pickup": "Hirmi Ultratech Cement",
+      "dropoff": "Raipur Airport",
+      "distance": 70,
+      "suvPrice": 2900,
+      "sedanPrice": 2000
+    },
+    {
+      "id": 625655,
+      "price": 1600,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Tilda Newra",
+      "distance": 52,
+      "suvPrice": 2500,
+      "sedanPrice": 1700
+    },
+    {
+      "id": 198009,
+      "price": 1600,
+      "active": true,
+      "pickup": "Tilda Newra",
+      "dropoff": "Raipur",
+      "distance": 52,
+      "suvPrice": 2500,
+      "sedanPrice": 1700
+    },
+    {
+      "id": 797841,
+      "price": 1600,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Tilda Newra",
+      "distance": 62,
+      "suvPrice": 2500,
+      "sedanPrice": 1700
+    },
+    {
+      "id": 743617,
+      "price": 1600,
+      "active": true,
+      "pickup": "Tilda Newra",
+      "dropoff": "Raipur Airport",
+      "distance": 62,
+      "suvPrice": 2500,
+      "sedanPrice": 1700
+    },
+    {
+      "id": 523901,
+      "price": 1900,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Korba",
+      "distance": 95,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 6430,
+      "price": 1900,
+      "active": true,
+      "pickup": "Korba",
+      "dropoff": "Bilaspur",
+      "distance": 95,
+      "suvPrice": 2900,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 41354,
+      "price": 4200,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Ambikapur",
+      "distance": 224,
+      "suvPrice": 6600,
+      "sedanPrice": 4400
+    },
+    {
+      "id": 412910,
+      "price": 4200,
+      "active": true,
+      "pickup": "Ambikapur",
+      "dropoff": "Bilaspur",
+      "distance": 224,
+      "suvPrice": 6600,
+      "sedanPrice": 4400
+    },
+    {
+      "id": 446293,
+      "price": 2400,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Kharsia",
+      "distance": 124,
+      "suvPrice": 3500,
+      "sedanPrice": 2600
+    },
+    {
+      "id": 604388,
+      "price": 2400,
+      "active": true,
+      "pickup": "Kharsia",
+      "dropoff": "Bilaspur",
+      "distance": 124,
+      "suvPrice": 3500,
+      "sedanPrice": 2600
+    },
+    {
+      "id": 390620,
+      "price": 2300,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Sakti",
+      "distance": 95,
+      "suvPrice": 3400,
+      "sedanPrice": 2500
+    },
+    {
+      "id": 74150,
+      "price": 2300,
+      "active": true,
+      "pickup": "Sakti",
+      "dropoff": "Bilaspur",
+      "distance": 95,
+      "suvPrice": 3400,
+      "sedanPrice": 2500
+    },
+    {
+      "id": 795024,
+      "price": 2200,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Baradwar",
+      "distance": 82,
+      "suvPrice": 3300,
+      "sedanPrice": 2400
+    },
+    {
+      "id": 837403,
+      "price": 2200,
+      "active": true,
+      "pickup": "Baradwar",
+      "dropoff": "Bilaspur",
+      "distance": 82,
+      "suvPrice": 3300,
+      "sedanPrice": 2400
+    },
+    {
+      "id": 542934,
+      "price": 1800,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Champa",
+      "distance": 65,
+      "suvPrice": 2800,
+      "sedanPrice": 1900
+    },
+    {
+      "id": 476514,
+      "price": 1800,
+      "active": true,
+      "pickup": "Champa",
+      "dropoff": "Bilaspur",
+      "distance": 65,
+      "suvPrice": 2800,
+      "sedanPrice": 1900
+    },
+    {
+      "id": 713331,
+      "price": 1600,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Janjgir Naila",
+      "distance": 5500,
+      "suvPrice": 2600,
+      "sedanPrice": 1800
+    },
+    {
+      "id": 890248,
+      "price": 1600,
+      "active": true,
+      "pickup": "Janjgir Naila",
+      "dropoff": "Bilaspur",
+      "distance": 5500,
+      "suvPrice": 2600,
+      "sedanPrice": 1800
+    },
+    {
+      "id": 732198,
+      "price": 1400,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Akaltara",
+      "distance": 44,
+      "suvPrice": 2300,
+      "sedanPrice": 1600
+    },
+    {
+      "id": 954354,
+      "price": 1400,
+      "active": true,
+      "pickup": "Akaltara",
+      "dropoff": "Bilaspur",
+      "distance": 44,
+      "suvPrice": 2300,
+      "sedanPrice": 1600
+    },
+    {
+      "id": 819547,
+      "price": 2500,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Pendra Road",
+      "distance": 105,
+      "suvPrice": 3300,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 979791,
+      "price": 2500,
+      "active": true,
+      "pickup": "Pendra Road",
+      "dropoff": "Bilaspur",
+      "distance": 105,
+      "suvPrice": 3300,
+      "sedanPrice": 2700
+    },
+    {
+      "id": 689999,
+      "price": 4900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Pendra Road",
+      "distance": 225,
+      "suvPrice": 6500,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 738047,
+      "price": 4900,
+      "active": true,
+      "pickup": "Pendra Road",
+      "dropoff": "Raipur",
+      "distance": 225,
+      "suvPrice": 6500,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 919896,
+      "price": 4900,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Pendra Road",
+      "distance": 235,
+      "suvPrice": 6500,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 10995,
+      "price": 4900,
+      "active": true,
+      "pickup": "Pendra Road",
+      "dropoff": "Raipur Airport",
+      "distance": 235,
+      "suvPrice": 6500,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 276535,
+      "price": 2400,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Kawardha",
+      "distance": 110,
+      "suvPrice": 3500,
+      "sedanPrice": 2600
+    },
+    {
+      "id": 33330,
+      "price": 2400,
+      "active": true,
+      "pickup": "Kawardha",
+      "dropoff": "Bilaspur",
+      "distance": 110,
+      "suvPrice": 3500,
+      "sedanPrice": 2600
+    },
+    {
+      "id": 905624,
+      "price": 2200,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Bemetara",
+      "distance": 98,
+      "suvPrice": 3200,
+      "sedanPrice": 2400
+    },
+    {
+      "id": 178530,
+      "price": 2200,
+      "active": true,
+      "pickup": "Bemetara",
+      "dropoff": "Bilaspur",
+      "distance": 98,
+      "suvPrice": 3200,
+      "sedanPrice": 2400
+    },
+    {
+      "id": 865998,
+      "price": 2000,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Katghora",
+      "distance": 85,
+      "suvPrice": 3000,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 7433,
+      "price": 2000,
+      "active": true,
+      "pickup": "Katghora",
+      "dropoff": "Bilaspur",
+      "distance": 85,
+      "suvPrice": 3000,
+      "sedanPrice": 2100
+    },
+    {
+      "id": 65328,
+      "price": 2600,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Amarkantak",
+      "distance": 125,
+      "suvPrice": 3800,
+      "sedanPrice": 2800
+    },
+    {
+      "id": 764080,
+      "price": 2600,
+      "active": true,
+      "pickup": "Amarkantak",
+      "dropoff": "Bilaspur",
+      "distance": 125,
+      "suvPrice": 3800,
+      "sedanPrice": 2800
+    },
+    {
+      "id": 740200,
+      "price": 4900,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Amarkantak",
+      "distance": 233,
+      "suvPrice": 6900,
+      "sedanPrice": 5100
+    },
+    {
+      "id": 185156,
+      "price": 4900,
+      "active": true,
+      "pickup": "Amarkantak",
+      "dropoff": "Raipur",
+      "distance": 233,
+      "suvPrice": 6900,
+      "sedanPrice": 5100
+    },
+    {
+      "id": 499502,
+      "price": 5000,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Amarkantak",
+      "distance": 248,
+      "suvPrice": 7000,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 150339,
+      "price": 5000,
+      "active": true,
+      "pickup": "Amarkantak",
+      "dropoff": "Raipur Airport",
+      "distance": 248,
+      "suvPrice": 7000,
+      "sedanPrice": 5200
+    },
+    {
+      "id": 551258,
+      "price": 5400,
+      "active": true,
+      "pickup": "Raipur",
+      "dropoff": "Tamnar",
+      "distance": 285,
+      "suvPrice": 6900,
+      "sedanPrice": 5600
+    },
+    {
+      "id": 917403,
+      "price": 5400,
+      "active": true,
+      "pickup": "Tamnar",
+      "dropoff": "Raipur",
+      "distance": 285,
+      "suvPrice": 6900,
+      "sedanPrice": 5600
+    },
+    {
+      "id": 644692,
+      "price": 5400,
+      "active": true,
+      "pickup": "Raipur Airport",
+      "dropoff": "Tamnar",
+      "distance": 275,
+      "suvPrice": 6900,
+      "sedanPrice": 5600
+    },
+    {
+      "id": 270683,
+      "price": 5400,
+      "active": true,
+      "pickup": "Tamnar",
+      "dropoff": "Raipur Airport",
+      "distance": 275,
+      "suvPrice": 6900,
+      "sedanPrice": 5600
+    },
+    {
+      "id": 431162,
+      "price": 2800,
+      "active": true,
+      "pickup": "Jharsuguda (OD)",
+      "dropoff": "Tamnar",
+      "distance": 92,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 531135,
+      "price": 2800,
+      "active": true,
+      "pickup": "Tamnar",
+      "dropoff": "Jharsuguda (OD)",
+      "distance": 92,
+      "suvPrice": 3900,
+      "sedanPrice": 3000
+    },
+    {
+      "id": 974829,
+      "price": 4400,
+      "active": true,
+      "pickup": "Jharsuguda (OD)",
+      "dropoff": "Korba",
+      "distance": 198,
+      "suvPrice": 5900,
+      "sedanPrice": 4600
+    },
+    {
+      "id": 667581,
+      "price": 4400,
+      "active": true,
+      "pickup": "Korba",
+      "dropoff": "Jharsuguda (OD)",
+      "distance": 198,
+      "suvPrice": 5900,
+      "sedanPrice": 4600
+    },
+    {
+      "id": 952726,
+      "price": 7800,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Nagpur (MH)",
+      "distance": 400,
+      "suvPrice": 9200,
+      "sedanPrice": 8000
+    },
+    {
+      "id": 86865,
+      "price": 7800,
+      "active": true,
+      "pickup": "Nagpur (MH)",
+      "dropoff": "Bilaspur",
+      "distance": 400,
+      "suvPrice": 9200,
+      "sedanPrice": 8000
+    },
+    {
+      "id": 18734,
+      "price": 6300,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Jagdalpur",
+      "distance": 420,
+      "suvPrice": 7900,
+      "sedanPrice": 6500
+    },
+    {
+      "id": 414976,
+      "price": 6300,
+      "active": true,
+      "pickup": "Jagdalpur",
+      "dropoff": "Bilaspur",
+      "distance": 420,
+      "suvPrice": 7900,
+      "sedanPrice": 6500
+    },
+    {
+      "id": 27338,
+      "price": 4800,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Jharsuguda (OD)",
+      "distance": 235,
+      "suvPrice": 6800,
+      "sedanPrice": 5000
+    },
+    {
+      "id": 210035,
+      "price": 4800,
+      "active": true,
+      "pickup": "Jharsuguda (OD)",
+      "dropoff": "Bilaspur",
+      "distance": 235,
+      "suvPrice": 6800,
+      "sedanPrice": 5000
+    },
+    {
+      "id": 676429,
+      "price": 4700,
+      "active": true,
+      "pickup": "Bilaspur",
+      "dropoff": "Sambalpur (OD)",
+      "distance": 255,
+      "suvPrice": 6500,
+      "sedanPrice": 4900
+    },
+    {
+      "id": 21165,
+      "price": 4700,
+      "active": true,
+      "pickup": "Sambalpur (OD)",
+      "dropoff": "Bilaspur",
+      "distance": 255,
+      "suvPrice": 6500,
+      "sedanPrice": 4900
+    },
+    {
+      "id": 652718,
+      "price": 4700,
+      "active": true,
+      "pickup": "Bhilai",
+      "dropoff": "Jagdalpur",
+      "distance": 290,
+      "suvPrice": 6000,
+      "sedanPrice": 4900
+    },
+    {
+      "id": 186332,
+      "price": 4700,
+      "active": true,
+      "pickup": "Jagdalpur",
+      "dropoff": "Bhilai",
+      "distance": 290,
+      "suvPrice": 6000,
+      "sedanPrice": 4900
+    },
+    {
+      "id": 234635,
+      "price": 4700,
+      "active": true,
+      "pickup": "Durg",
+      "dropoff": "Jagdalpur",
+      "distance": 292,
+      "suvPrice": 6000,
+      "sedanPrice": 4900
+    },
+    {
+      "id": 982452,
+      "price": 4700,
+      "active": true,
+      "pickup": "Jagdalpur",
+      "dropoff": "Durg",
+      "distance": 292,
+      "suvPrice": 6000,
+      "sedanPrice": 4900
+    },
+    {
+      "id": 106118,
+      "price": 900,
+      "active": true,
+      "pickup": "Bhatapara",
+      "dropoff": "Baloda Bazar",
+      "distance": 30,
+      "suvPrice": 1600,
+      "sedanPrice": 1000
+    },
+    {
+      "id": 59035,
+      "price": 900,
+      "active": true,
+      "pickup": "Baloda Bazar",
+      "dropoff": "Bhatapara",
+      "distance": 30,
+      "suvPrice": 1600,
+      "sedanPrice": 1000
+    }
+  ]

@@ -1,18 +1,15 @@
 <!-- Hero Section -->
-<section class="bg-gradient-to-tr from-orange-200 to-orange-400 py-8">
+<!-- <button color="accent" mat-raised-button (click)="tryToSend()">Send</button> -->
+<section class="bg-gradient-to-tr from-orange-200 to-orange-400 pt-5 pb-2">
   <img src="assets/wp.png" (click)="bookingByWhatsapp()" class="cursor-pointer bottom-0 right-0 z-50 h-20 w-28 fixed" alt="whatsapp-icon">
-  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-6">
+  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
     <!-- Left Side Content -->
-    <div class="text-left space-y-4 md:w-1/2">
-      <p class="text-4xl font-semibold text-gray-800 inline-block relative right-3 top-2">
-        <span class="text-6xl">Y</span>
-        <span class="relative right-2">our Way</span>
-        <span>Our Goal</span>
-      </p>
-      <p class="text-gray-700 text-lg md:hidden flex flex-col">
-        <span>Choose the option that fits your needs,</span>
-        <span>Available in all over Chhattisgarh & Nagpur.</span>
-      </p>
+    <div class="text-left space-y-2">
+     
+      <div class="marquee mb-3 text-[#343333] font-semibold border-b border-[#ebbc9f]">
+        <p> KiteCab: Taxi Service Across Chhattisgarh</p>
+    </div>
+
       <div class="flex gap-2 md:flex-row flex-col">
         <button mat-raised-button (click)="bookingByCall()" color="warn">
           <mat-icon>call</mat-icon>BOOK BY CALL
@@ -42,7 +39,7 @@
 
       <!-- One Way Form -->
       @if (activeForm === "oneWay") {
-      <form [formGroup]="oneWayForm" class="mt-2 space-y-4 px-3">
+      <form [formGroup]="oneWayForm" class="mt-2 space-y-2 px-3">
         <mat-form-field appearance="outline" class="w-full mr-3" style="max-width: 300px;">
           <input matInput formControlName="pickupLocation" [matAutocomplete]="onwayPickup"
             placeholder="Pickup Location">

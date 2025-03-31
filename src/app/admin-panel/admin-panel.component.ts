@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocationService } from '../location.service';
 import { MatInputModule, MatInput } from '@angular/material/input';
 import { MatTableModule, MatTable, MatTableDataSource } from '@angular/material/table';
@@ -18,13 +18,16 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { AuthService } from '../auth.service';
 import { ConfirmCustomerRecordDeleteComponent } from '../confirm-customer-record-delete/confirm-customer-record-delete.component';
+import { map, startWith } from 'rxjs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [ReactiveFormsModule, NgxMatTimepickerModule, MatDatepickerModule, MatTableModule, MatCardModule, MatDialogModule, CommonModule, MatChipsModule, MatButtonModule, MatSlideToggleModule, MatTable, MatIconModule, FormsModule, MatInputModule, MatInput, MatTableModule],
+  imports: [ReactiveFormsModule,MatBadgeModule,MatAutocompleteModule, NgxMatTimepickerModule, MatDatepickerModule, MatTableModule, MatCardModule, MatDialogModule, CommonModule, MatChipsModule, MatButtonModule, MatSlideToggleModule, MatTable, MatIconModule, FormsModule, MatInputModule, MatInput, MatTableModule],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss'
 })
@@ -35,6 +38,9 @@ export class AdminPanelComponent implements OnInit {
   locationPrices: any[] = [];
   filteredLocationPrices: any[] = []
   localRentalPackages: any[] = [];
+  filterPickupLocation: string[] = []
+  filterDropLocation: string[] = [];
+  numberOfBookingInSelectedDate:number = 0;
   editingId: any;
   editingRentalId: number | null = null;
   id: string | undefined;
@@ -49,7 +55,6 @@ export class AdminPanelComponent implements OnInit {
   enquiryDataSource = new MatTableDataSource<any>();
   displayedBookingDetailColumns: string[] = ['id', 'customerDetail', 'bookingDetail', 'actions'];
   displayedColumns: string[] = ['pickup', 'dropoff', 'price', 'sedanPrice', 'suvPrice', 'distance', 'active', 'actions'];
-
   constructor(
     private fb: FormBuilder,
     private locationService: LocationService,
@@ -109,10 +114,12 @@ export class AdminPanelComponent implements OnInit {
     this.loadRentalPackages();
     this.fetchCustomerRecords();
     this.loadEnquiryData();
-    setTimeout(() => { this.showAllRecords() }, 1000)
+    setTimeout(() => {
+      this.showAllRecords();}, 1000);
   }
 
   //------------------------- One-Way Location and Prices Fields -------------------------------------------------   
+
 
   // To load one-way location and prices
   public loadLocationPrices(): void {
@@ -392,6 +399,7 @@ export class AdminPanelComponent implements OnInit {
         const recordPickupDate = new Date(record.customerDetail.pickupDate).toLocaleDateString("en-US");
         return recordPickupDate === selectedDate;
       });
+      this.numberOfBookingInSelectedDate = this.filteredRecords.length
       // Show snackbar if no records are found for the selected date
       if (this.filteredRecords.length === 0) {
         this.snackBar.open('No records found for the selected date', 'Close', {
@@ -407,8 +415,10 @@ export class AdminPanelComponent implements OnInit {
   }
 
   // Reset to show all records
-  public showAllRecords(): void {
+  public showAllRecords():any {
+    this.numberOfBookingInSelectedDate = 0;
     this.fetchCustomerRecords();
+    this.setupAutoCompleteOptions();
     this.filteredRecords = [...this.customerRecords];
   }
 
@@ -503,7 +513,8 @@ export class AdminPanelComponent implements OnInit {
       // Separator Line
       doc.setLineWidth(0.5);
       doc.line(10, 45, 200, 45);
-
+      console.log(record.customerDetail)
+      console.log(record.bookingDetail)
       // Table-Like Layout for Details
       const details = [
         ['Full Name', record.customerDetail.fullName],
@@ -516,10 +527,13 @@ export class AdminPanelComponent implements OnInit {
         ['Pickup Location', record.bookingDetail.pickupLocation],
         ['Drop Location', record.bookingDetail.dropLocation || 'N/A'],
         ['Distance', `${record.bookingDetail.distance} km`],
+        ['Passenger', record.customerDetail.numberOfPassengers !== undefined ? String(record.customerDetail.numberOfPassengers) : 'N/A'],
         ['Waiting Time', `${record.bookingDetail.waitingTime || 'N/A'} min`],
         ['Approx Distance', `${record.bookingDetail.approxDistance || 'N/A'} km`],
         ['Package', record.bookingDetail.package || 'N/A'],
       ];
+
+
 
       let startY = 50;
 
@@ -538,6 +552,12 @@ export class AdminPanelComponent implements OnInit {
       doc.text(`Total Price: ${record.bookingDetail.price} Rupee`, 10, startY);
       doc.setLineWidth(0.5);
       doc.line(10, startY + 1, 80, startY + 1); // Underline for price
+
+      // Add "All taxes included" line below Total Price
+      startY += 7; // Move down a bit for spacing
+      doc.setFont("helvetica");
+      doc.setFontSize(10);
+      doc.text("*All taxes included*", 10, startY);
 
       // Footer Section - Compact
       startY += 10;
@@ -582,6 +602,51 @@ export class AdminPanelComponent implements OnInit {
       (error) => console.error('Error deleting enquiry', error)
     );
   }
+
+  // Auto Complete for pickup and drop location
+  // Return autocomplete filtered data 
+ // Auto Complete for pickup and drop location
+// Return autocomplete filtered data
+private _filter(value: string, options: string[]): string[] {
+  const filterValue = value.toLowerCase();
+  return options.filter(option => option.toLowerCase().includes(filterValue));
+}
+
+// Filter autocomplete data
+public filteredAutoCompleteOptions(originalArray: string[], filteredArray: string[], control: FormControl): void {
+  control.valueChanges.pipe(
+    startWith(''),
+    map(value => this._filter(String(value || ''), originalArray))
+  ).subscribe((filteredResults: string[]) => {
+    filteredArray.length = 0;
+    filteredArray.push(...filteredResults);
+  }, (error: any) => console.error('Error in valueChanges subscription:', error));
+}
+
+// Setup autocomplete options
+private setupAutoCompleteOptions(): void {
+  // Extract and deduplicate pickup locations
+  const finalFilteredPickupFields: string[] = Array.from(
+    new Set(
+      this.filteredLocationPrices
+        .filter((location: any) => location.pickup)
+        .map((location: any) => location.pickup)
+    )
+  );
+
+  // Extract and deduplicate drop locations
+  const finalFilteredDropFields: string[] = Array.from(
+    new Set(
+      this.filteredLocationPrices
+        .filter((location: any) => location.dropoff)
+        .map((location: any) => location.dropoff)
+    )
+  );
+
+  // Initialize autocomplete options for pickup and drop locations
+  this.filteredAutoCompleteOptions(finalFilteredPickupFields, this.filterPickupLocation, this.priceForm.get('pickup') as FormControl);
+  this.filteredAutoCompleteOptions(finalFilteredDropFields, this.filterDropLocation, this.priceForm.get('dropoff') as FormControl);
+}
 
   //---------------------------------- Other Fields --------------------------------------------------- 
 
