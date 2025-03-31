@@ -32,11 +32,21 @@
       <div class="md:flex gap-2">
         <mat-form-field appearance="fill" class="w-full mb-4">
           <mat-label>Pickup Location</mat-label>
-          <input matInput formControlName="pickup" required />
+          <input matInput formControlName="pickup" required [matAutocomplete]="pickupFields"/>
+          <mat-autocomplete #pickupFields="matAutocomplete">
+            @for (field of filterPickupLocation; track $index) {
+            <mat-option [value]="field">{{field}}</mat-option>
+            }
+            </mat-autocomplete>
         </mat-form-field>
         <mat-form-field appearance="fill" class="w-full mb-4">
           <mat-label>Dropoff Location</mat-label>
-          <input matInput formControlName="dropoff" required />
+          <input matInput formControlName="dropoff" required [matAutocomplete]="dropFields"/>
+          <mat-autocomplete #dropFields="matAutocomplete">
+            @for (field of filterDropLocation; track $index) {
+            <mat-option [value]="field">{{field}}</mat-option>
+            }
+            </mat-autocomplete>
         </mat-form-field>
       </div>
       <div class="md:flex gap-2">
@@ -196,11 +206,22 @@
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <button mat-raised-button (click)="showAllRecords()">All</button>
+    <button
+    mat-raised-button
+    [matBadge]="numberOfBookingInSelectedDate"
+    matBadgePosition="before"
+    [matBadgeHidden]="numberOfBookingInSelectedDate <= 0"
+    (click)="showAllRecords()"
+  >
+    All
+  </button>
+      
+    
   </div>
 
   <!-- Table Section -->
-  <div class="overflow-x-auto">
+   <hr><hr>
+  <div class="overflow-x-auto h-96 overflow-y-scroll">
     <table mat-table [dataSource]="filteredRecords" class="w-full border border-gray-200 rounded-lg">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
@@ -272,6 +293,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedBookingDetailColumns;"></tr>
     </table>
   </div>
+  <hr><hr>
 </div>
 }
 
@@ -391,7 +413,7 @@
   
       <!-- Drop Location Column -->
       <ng-container matColumnDef="DropLocationOrPackages">
-        <th mat-header-cell *matHeaderCellDef> dropLocation/package Field</th>
+        <th mat-header-cell *matHeaderCellDef> dropLocation/package</th>
         <td mat-cell *matCellDef="let element"> {{element.dropLocationOrPackages}} </td>
       </ng-container>
 
@@ -409,7 +431,7 @@
   
       <!-- Mobile Number Column -->
       <ng-container matColumnDef="mobileNumber">
-        <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+        <th mat-header-cell *matHeaderCellDef> Mo.Number </th>
         <td mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
       </ng-container>
   

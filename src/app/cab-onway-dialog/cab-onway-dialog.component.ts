@@ -82,6 +82,7 @@ export class CabOnwayDialogComponent implements OnInit {
     this.customerForm.value.pickupDate = new Date(this.customerForm.value.pickupDate).toDateString();
     this.isCustomerRecordAdded = !!this.customerForm.value;
 
+    
     const payload = {
       customerDetail: this.customerForm.value,
       bookingDetail: this.bookingCabDetail

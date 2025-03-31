@@ -19,6 +19,7 @@ import { CabRentalDialogComponent } from '.././cab-rental-dialog/cab-rental-dial
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { map, startWith, filter, forkJoin } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -54,6 +55,7 @@ export class HomeComponent {
     private router: Router,
     private locationService: LocationService,
     private snackBar: MatSnackBar,
+    private http:HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -80,7 +82,7 @@ export class HomeComponent {
     });
 
   }
-
+  
   // Function to fetch data and set up autocomplete after data is ready
   private initializeData(): void {
     // Use forkJoin to wait for both observables to complete
@@ -285,9 +287,36 @@ export class HomeComponent {
       time: new Date().toLocaleTimeString()    // Current time in locale format
     };
     this.locationService.setEnquiryRecord(enquiryData).subscribe((res: any) => {
+      this.sendEmail(enquiryData.pickupLocation , enquiryData.dropLocationOrPackages, enquiryData.mobileNumber)
     })
   }
 
+  public sendEmail(pickupLocation: any, dropLocation: any, mobileNumber: number) {
+    const payload = {
+      to: ['kitecab00@gmail.com'], // Recipient
+      subject: 'New Enquiry from KiteCab',
+      html: `
+        <p>Enquiry details:</p>
+        <ul>
+          <li><strong>Pickup Location:</strong> ${pickupLocation}</li>
+          <li><strong>Drop Location:</strong> ${dropLocation}</li>
+          <li><strong>Mobile Number:</strong> ${mobileNumber}</li>
+        </ul>
+      `
+    };
+  
+    const backendUrl = 'https://backend-email-sender.onrender.com/send-email'; // Replace with your backend URL
+  
+    this.http.post(backendUrl, payload).subscribe({
+      next: (res) => {
+        // console.log('Email sent successfully:', res);
+      },
+      error: (err) => {
+        // console.error('Error sending email:', err);
+      }
+    });
+  }
+  
   // Open calling dialog
   public bookingByCall(): void {
     this.dialog.open(DialogCallComponent, {});

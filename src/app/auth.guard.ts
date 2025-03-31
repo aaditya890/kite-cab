@@ -9,6 +9,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (!authService.isAdmin()) {
     router.navigate(['/home']); // Redirect to login if not authenticated
     return false; 
-  }
+}
   return true;
 };
