@@ -9,12 +9,12 @@ export const routes: Routes = [
         canActivate:[authGuard]
     },
     {
-       path:'home',
+       path:'',
        loadComponent: ()=> import('../app/home/home.component').then((m) => m.HomeComponent) 
     },
-    {
-        path:'',
-        pathMatch:'full',
-        redirectTo:'home'
-    }
+    // {
+    //     path:'',
+    //     pathMatch:'full',
+    //     redirectTo:'home'
+    // }
 ];
