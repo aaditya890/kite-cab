@@ -20,6 +20,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { map, startWith, filter, forkJoin } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { SupabaseService } from '../supabase.service';
 
 @Component({
   selector: 'app-home',
@@ -46,6 +47,7 @@ export class HomeComponent {
   rentalFieldData: any[] = [];
   cabPrice: number | null = null;
   cabDistance: number | null = null;
+  locationList: any[] = [];
   locations: { [pickup: string]: { [drop: string]: { price: number; distance: number, sedanPrice: number, suvPrice: number, active?: boolean } } } = {};
 
   constructor(
@@ -55,55 +57,62 @@ export class HomeComponent {
     private router: Router,
     private locationService: LocationService,
     private snackBar: MatSnackBar,
-    private http:HttpClient
+    private http:HttpClient,
+    private supabase: SupabaseService
   ) { }
 
-  ngOnInit(): void {
-    this.initializeData();
+ngOnInit(): void {
+  this.supabase.getDataByKey('locationPrices').then(locations => {
+    this.locationList = locations;
 
-    this.oneWayForm = this.fb.group({
-      pickupLocation: ['', [Validators.required]],
-      dropLocation: ['', [Validators.required]],
-      mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
-    });
+    // Important step (previously missing)
+    this.processLocationData(locations);
 
-    this.roundTripForm = this.fb.group({
-      pickupLocation: ['', [Validators.required]],
-      dropLocation: ['', [Validators.required]],
-      waitingTime: ['', [Validators.required]],
-      approxDistance: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
-    });
+    this.initializeData(); // for autocomplete setup
+  });
 
-    this.localRentalForm = this.fb.group({
-      pickupLocation: ['', [Validators.required]],
-      package: ['', [Validators.required]],
-      mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-    });
+  // One Way Form
+  this.oneWayForm = this.fb.group({
+    pickupLocation: ['', [Validators.required]],
+    dropLocation: ['', [Validators.required]],
+    mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
+  });
 
-  }
+  // Round Trip Form
+  this.roundTripForm = this.fb.group({
+    pickupLocation: ['', [Validators.required]],
+    dropLocation: ['', [Validators.required]],
+    waitingTime: ['', [Validators.required]],
+    approxDistance: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],
+    mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
+  });
+
+  // Local Rental Form
+  this.localRentalForm = this.fb.group({
+    pickupLocation: ['', [Validators.required]],
+    package: ['', [Validators.required]],
+    mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
+  });
+}
+
+
   
-  // Function to fetch data and set up autocomplete after data is ready
-  private initializeData(): void {
-    // Use forkJoin to wait for both observables to complete
-    forkJoin([
-      this.locationService.getLocationPrices(),
-      this.locationService.getRentalPackages()
-    ]).subscribe(([locationData, rentalData]) => {
-      this.processLocationData(locationData);
-      this.rentalFieldData = rentalData;
+private initializeData(): void {
+  const locations = this.locationList;
 
-      // Set up autocomplete options after data has been loaded
-      this.setupAutoCompleteOptions();
-    }, error => {
-      console.error('Error fetching data:', error);
-    });
-  }
+  // Create deduplicated pickup and drop arrays
+  this.pickupFields = [...new Set(locations.map(loc => loc.pickup || '').filter(Boolean))];
+  this.dropFields = [...new Set(locations.map(loc => loc.dropoff || '').filter(Boolean))];
+
+  this.setupAutoCompleteOptions();
+}
+
+
 
   // Return autocomplete filtered data 
   private _filter(value: string, options: string[]): string[] {
-    const filterValue = value.toLowerCase();
-    return options.filter(option => option.toLowerCase().includes(filterValue));
+    const filterValue = value.toLocaleLowerCase();
+    return options.filter(option => option.toLocaleLowerCase().includes(filterValue));
   }
 
   // Filter autocomplete data 
